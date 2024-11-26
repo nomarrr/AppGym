@@ -1,0 +1,366 @@
+:host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.exercise-container {
+    display: flex;
+    flex-direction: column;
+    
+    padding: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.exercise-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+}
+
+.exercise-header img {
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.exercise-header label {
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+.table-container {
+    width: 100%;
+    padding: 0;
+    
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+/* Estilos para el encabezado */
+th {
+    background-color: #ffffff;
+    color: #7F8084;
+    font-weight: 500;
+    text-align: center;
+    padding: 12px 15px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+}
+
+th img {
+    width: 24px;
+}
+
+/* Estilos para las celdas */
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border: none;
+    border-bottom: none;
+}
+
+td img {
+    width: 31px;
+}
+
+/* Estilo para filas completadas (con checkbox marcado) */
+tr.completed {
+    background-color: #e8f5e9;
+}
+
+/* Estilo para filas no completadas */
+tr:not(.completed) {
+    background-color: white;
+}
+
+/* Estilo para los inputs */
+input[type="number"] {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background: transparent;
+    font-size: 14px;
+    text-align: center;
+    appearance: textfield;
+    text-align: center;
+    border: none;
+    outline: none;
+    background: transparent;
+    
+    /* Para Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    /* Para Firefox */
+    -moz-appearance: textfield;
+    
+    /* Mantener el mismo estilo al hacer focus */
+    &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+    
+    /* Para navegadores modernos */
+    &:focus-visible {
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+    
+    /* Eliminar el resaltado en dispositivos móviles */
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Para todos los navegadores modernos */
+    &::placeholder {
+        color: #000000; /* O el color que prefieras */
+        opacity: 1; /* Firefox aplica una opacidad por defecto */
+    }
+    
+    /* Para navegadores más antiguos */
+    &::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+        color: #000000;
+    }
+    
+    &:-ms-input-placeholder { /* IE/Edge */
+        color: #000000;
+    }
+    
+    &::-ms-input-placeholder { /* Microsoft Edge */
+        color: #000000;
+    }
+}
+
+/* Estilo para el checkbox */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #4CAF50;
+}
+
+/* Hover effect en las filas */
+/* tr:hover {
+    background-color: #f5f5f5;
+} */
+
+/* Estilos específicos por columna */
+td:first-child {
+    font-weight: 500;
+    width: 80px;
+}
+
+td:nth-child(2), /* KG */
+td:nth-child(3) { /* REPS */
+    width: 100px;
+}
+
+td:last-child { /* Checkbox column */
+    width: 60px;
+    text-align: center;
+}
+
+table {
+  width: 100%;
+  
+  th, td {
+    text-align: center;
+    
+
+    &:nth-child(1) {
+      width: 10%;
+    }
+    
+
+    &:nth-child(2) {
+      width: 70%;
+    }
+    
+
+    &:nth-child(3) {
+      width: 10%;
+    }
+    
+
+    &:nth-child(4) {
+      width: 10%;
+    }
+  }
+}
+
+.custom-checkbox {
+  display: none;
+  
+  & + label {
+    cursor: pointer;
+    
+    img {
+      opacity: 0.3;
+      transition: opacity 0.2s ease;
+    }
+  }
+  
+  &:checked + label img {
+    opacity: 1; 
+  }
+}
+
+tr {
+  transition: all 0.3s ease;
+  
+  &.completed-row {
+    background-color: #C8FFA2;
+  }
+}
+
+.table-container {
+  width: 100%;
+  
+  form {
+    width: 100%;
+    margin: 0;
+  }
+  
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    
+    th, td {
+      &:nth-child(1) { width: 10%; }
+      &:nth-child(2) { width: 70%; }
+      &:nth-child(3) { width: 10%; }
+      &:nth-child(4) { width: 10%; }
+    }
+  }
+}
+
+.exercise-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.exercise-options img {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.exercise-options .buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.exercise-options app-btn {
+  flex: 1;
+  max-width: 33%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exercise-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Asegurarse de que el último elemento dentro del card no tenga margen inferior */
+.exercise-card > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Si tienes un form dentro del card */
+form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Eliminar espacios de todos los elementos dentro del form */
+form > * {
+    margin: 0;
+    padding: 0;
+}
+
+/* Asegurarse que las series no tengan espacios extra */
+.series-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Eliminar espacios de los inputs y otros elementos */
+input, select, button {
+    margin: 0;
+    padding: 8px;
+}
+
+/* Agregar espacio después de los botones */
+.buttons-container {
+    margin-top: 10px;
+    padding-bottom: 10px; /* Espacio debajo de los botones */
+}
+
+/* O si los botones están directamente en el form */
+form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 10px; /* Espacio debajo del form */
+}
+
+.action-button {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    width: 35px;
+    height: 35px;
+}
+
+.action-button:hover {
+    transform: scale(1.1);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}

@@ -1,0 +1,86 @@
+.flex-container {
+  display: flex;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+}
+
+.login-container {
+  flex: 2;
+  background: #fff;
+  padding: 20px;
+  /*border-radius: 5px;*/
+  /*opacity: 60%;*/
+  display: flex;
+  flex-direction: column; /* Alinea los elementos en columna */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: center; /* Centra los elementos verticalmente */
+  text-align: center; /* Centra el texto */
+}
+
+.right-image {
+  flex: 3;
+  /*opacity: 60%;
+  height: 100%; /* Para que ocupe el 100% en caso de que haya contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img{
+  width: 60%;
+  height: 60%;
+}
+
+
+  body{
+    background-image: url('../../../../public/img/imagenLogin.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .form-group{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Alinea el label encima del input */
+  }
+
+  .name-input {
+    margin-bottom: 5px;
+    text-align: left; /* Alinea el texto del label a la izquierda */
+    width: 100%; /* Asegura que el label ocupe todo el ancho del contenedor */
+  }
+
+input[type="email"],
+input[type="password"] {
+  width: 65%; /* Ocupa todo el ancho disponible */
+  padding: 10px; /* Espacio interno para hacer el campo más grande */
+  font-size: 16px; /* Tamaño de fuente */
+  color: #000000; /* Color del texto */
+  background-color: #F3F3F3; /* Color de fondo */
+  border: none;
+  border-bottom: 1px solid #000000; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  transition: border 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border: 1px solid #007bff; /* Aplica un borde completo y cambia de color */
+  outline: none; /* Elimina el contorno predeterminado */
+  border-radius: 5px; /* Mantiene el borde redondeado */
+}
+
+
+
+label{
+  cursor: pointer;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  color: #1680EA;
+}

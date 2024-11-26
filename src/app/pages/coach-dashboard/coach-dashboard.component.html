@@ -1,0 +1,20 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <h1>Clientes</h1>
+            <div class="clients">
+                <app-client-card clientName="Cliente 1"></app-client-card>
+                <app-client-card clientName="Cliente 2"></app-client-card>
+                <app-client-card clientName="Cliente 3"></app-client-card>
+                <div class="info-row">
+                    <div class="labels-group">
+                        <label class="label">Mis Clientes</label>
+                        <label class="blueLabel">{{myClients}}</label>
+                    </div>
+                    <app-btn buttonText="Agregar Cliente"></app-btn>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,21 @@
+button {
+    width: 100%; /* Se ajustará al ancho del contenedor */
+    min-width: 80px; /* Asegura que el botón tenga espacio suficiente */
+    padding: 10px; /* Espacio interno */
+    font-size: inherit; /* Hereda el tamaño de fuente de `buttonFontSize` */
+    color: #fff; /* Color del texto */
+    background-color: #1680EA; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Suaviza las transiciones */
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #056dd6; /* Cambia el color de fondo */
+}
+
+button:active {
+    transform: scale(0.95); /* Reduce el tamaño al hacer clic */
+}

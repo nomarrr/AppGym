@@ -1,0 +1,60 @@
+<div class="exercise-container">
+  <div class="exercise-header">
+    <img [src]="imageUrl" alt="Exercise Image" />
+    <label>{{ exerciseName }}</label>
+  </div>
+
+  <div class="table-container">
+    <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+      <table>
+        <thead>
+          <tr>
+            <th>Serie</th>
+            <th>KG</th>
+            <th>REPS</th>
+            <th><img src="img/check.png" /></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let serie of series" [formGroup]="serie.form" [class.completed-row]="serie.form.controls['completed'].value">
+            <td>{{serie.index}}</td>
+            <td>
+              <input type="number" formControlName="kg" placeholder="KG" />
+            </td>
+            <td>
+              <input type="number" formControlName="reps" placeholder="REPS" />
+            </td>
+            <td>
+              <input type="checkbox" [formControlName]="'completed'" class="custom-checkbox" id="check-{{serie.index}}">
+              <label for="check-{{serie.index}}">
+                <img *ngIf="!serie.form.get('completed')?.value" src="img/check2.png" class="check-icon"/>
+                <img *ngIf="serie.form.get('completed')?.value" src="img/check2-green.png" class="check-icon"/>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="exercise-options">
+        <img src="img/up.png" class="action-button" (click)="moveUp()">
+        <div class="buttons-container">
+          <app-btn buttonText="Eliminar serie" 
+                   buttonWidth="100%" 
+                   buttonFontSize="16px" 
+                   type="button"
+                   (click)="removeSet()"></app-btn>
+          <app-btn buttonText="Agregar serie" 
+                   buttonWidth="100%" 
+                   buttonFontSize="16px" 
+                   type="button"
+                   (click)="addSet()"></app-btn>
+          <app-btn buttonText="Eliminar ejercicio" 
+                   buttonWidth="100%" 
+                   buttonFontSize="16px" 
+                   type="button"></app-btn>
+        </div>
+        <img src="img/down.png" class="action-button" (click)="moveDown()">
+      </div>
+    </form>
+  </div>
+</div>

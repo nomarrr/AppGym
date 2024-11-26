@@ -1,0 +1,27 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <h1>Clientes</h1>
+            <div class="profile">
+                <div class="container2">
+                    <div class="pfp">
+                        <img [src]="imgSrc">
+                    </div>
+                    <div class="info">
+                        <p class="label">{{clientName}}</p>
+                        <p class="label">{{clientBio}}</p>
+                    </div>
+                </div>
+                <div class="stats-group">
+                    <label class="label">Entrenamientos</label>
+                    <label class="blackLabel">100</label>
+                </div>
+                <div class="buttons">
+                    <app-grey-btn buttonText="Estadisticas" imgSrc="img/Grey-analytics.png"></app-grey-btn>
+                    <app-grey-btn buttonText="Rutinas" imgSrc="img/Grey-dumbbell.png"></app-grey-btn>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

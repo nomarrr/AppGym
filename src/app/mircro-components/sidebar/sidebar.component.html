@@ -1,0 +1,46 @@
+<nav class="sidebar">
+    <ul>
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'entrenamiento'"
+           (click)="setActiveItem('entrenamiento')">
+        <img src="img/Dumbbell.png" alt="Entrenamiento">
+        <label>Entrenamiento</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'alimentacion'"
+           (click)="setActiveItem('alimentacion')">
+        <img src="img/Healthy Eating.png" alt="Alimentacion">
+        <label>Alimentacion</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'estadisticas'"
+           (click)="setActiveItem('estadisticas')">
+        <img src="img/Analytics.png" alt="Estadisticas">
+        <label>Estadisticas</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'escaner'"
+           (click)="setActiveItem('escaner')">
+        <img src="img/Qr Code.png" alt="Escaner">
+        <label>Escaner</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'perfil'"
+           (click)="setActiveItem('perfil')">
+        <img src="img/User.png" alt="Perfil">
+        <label>Perfil</label>
+      </div>
+  
+      <div class="sidebar-item logout"
+           [class.active]="activeItem === 'logout'"
+           (click)="setActiveItem('logout')">
+        <img src="img/Logout Rounded.png" alt="Cerrar sesion">
+        <label>Cerrar sesion</label>
+      </div>
+    </ul>
+</nav>
+  

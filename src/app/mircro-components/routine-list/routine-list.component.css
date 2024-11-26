@@ -1,0 +1,10 @@
+div{
+    background-color: #ffffff; /* Cambia el color a un gris claro */
+    padding: 10px; /* Agrega algo de padding para mejor visibilidad */
+    border-radius: 10px; /* Opcional: bordes redondeados */
+    width: 99%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

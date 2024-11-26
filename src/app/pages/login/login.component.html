@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="flex-container">
+  <div class="login-container">
+    <h2>Iniciar sesion</h2>
+    <form (ngSubmit)="Login($event)">
+      
+      <app-auth-input-field type="email" inputId="email" placeholder="Correo electronico" (valueChange)="email = $event"></app-auth-input-field>
+
+      <app-auth-input-field type="password" inputId="password" placeholder="********" (valueChange)="password = $event"></app-auth-input-field>
+
+      <app-btn buttonText="Iniciar sesion" buttonWidth="65%" buttonFontSize="16px" type="submit" buttonMarginBottom="30px"></app-btn>
+
+      <label (click)="goToRecoverPassword()">¿Olvidaste tu contraseña?</label>
+
+      <label (click)="goToRegister()">Registrarse</label>
+
+      
+    </form>
+  </div>
+  <div class="right-image">
+    <img src="img/corazon.png" alt="jpppp">
+  </div>
+</div>
+
+
+
+</body>
+
+</html>

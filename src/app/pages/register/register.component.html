@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="flex-container">
+  <div class="login-container">
+    <h2>Registrarse</h2>
+    <form (ngSubmit)="Register($event)">
+      
+      <app-auth-input-field type="text" inputId="name" placeholder="Nombre" (valueChange)="name = $event"></app-auth-input-field>
+
+      <app-auth-input-field type="email" inputId="email" placeholder="Correo electronico" (valueChange)="email = $event"></app-auth-input-field>
+
+      <app-auth-input-field type="password" inputId="password" placeholder="contraseña" (valueChange)="password = $event"></app-auth-input-field>
+
+      <app-auth-input-field type="password" inputId="repeatPassword" placeholder="Repetir contraseña" (valueChange)="repeatPassword = $event"></app-auth-input-field>
+
+      <app-btn buttonText="Registrarse" buttonWidth="65%" buttonFontSize="16px" type="submit" buttonMarginBottom="30px"></app-btn>
+
+      <label (click)="goToLogin()">Iniciar sesion</label>
+
+      
+    </form>
+  </div>
+  <div class="right-image">
+    <img src="img/corazon.png" alt="">
+  </div>
+</div>
+
+
+</body>
+
+</html>

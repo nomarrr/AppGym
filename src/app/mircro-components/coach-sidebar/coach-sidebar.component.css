@@ -1,0 +1,53 @@
+/* Ajuste principal del sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto; /* Agrega scroll solo si el contenido es más grande que la pantalla */
+    box-sizing: border-box;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  /* Estilos de los ítems del sidebar */
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    cursor: pointer; /* Para indicar que es clickeable */
+  }
+  
+  .sidebar-item img {
+    width: 50px; 
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .sidebar-item label {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #7F8084;
+    transition: color 0.2s; /* Para una transición suave */
+  }
+  
+  /* Estilo cuando el ítem está activo */
+  .sidebar-item.active label {
+    color: #1680EA; /* O el color que prefieras */
+    font-weight: 500; /* Opcional: hacer el texto más bold */
+  }
+  
+  /* Empuja "Cerrar sesión" al final */
+  .logout {
+    margin-top: auto;
+  }
+  

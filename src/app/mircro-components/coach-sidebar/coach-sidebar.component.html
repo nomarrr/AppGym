@@ -1,0 +1,47 @@
+<nav class="sidebar">
+    <ul>
+      <div class="sidebar-item" 
+           [class.active]="activeItem === 'clientes'"
+           (click)="setActiveItem('clientes')">
+        <img src="img/Search Client.png">
+        <label>Clientes</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'ejercicios'"
+           (click)="setActiveItem('ejercicios')">
+        <img src="img/exercises.png">
+        <label>Ejercicios</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'rutinas'"
+           (click)="setActiveItem('rutinas')">
+        <img src="img/Dumbbell.png">
+        <label>Rutinas</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'recetas'"
+           (click)="setActiveItem('recetas')">
+        <img src="img/Healthy Eating.png">
+        <label>Recetas</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'perfil'"
+           (click)="setActiveItem('perfil')">
+        <img src="img/User.png" alt="Perfil">
+        <label>Perfil</label>
+      </div>
+  
+      <!-- Cerrar sesión -->
+      <div class="sidebar-item logout"
+           [class.active]="activeItem === 'logout'"
+           (click)="setActiveItem('logout')">
+        <img src="img/Logout Rounded.png" alt="Cerrar sesion">
+        <label>Cerrar sesion</label>
+      </div>
+    </ul>
+  </nav>
+  

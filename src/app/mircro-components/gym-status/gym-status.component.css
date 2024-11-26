@@ -1,0 +1,18 @@
+div{
+    background-color: #ffffff; /* Cambia el color a un gris claro */
+    padding: 20px; /* Agrega algo de padding para mejor visibilidad */
+    border-radius: 10px; /* Opcional: bordes redondeados */
+    width: 97%;
+}
+.label {
+    flex-grow: 1;
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+.blueLabel {
+    flex-grow: 1;
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}

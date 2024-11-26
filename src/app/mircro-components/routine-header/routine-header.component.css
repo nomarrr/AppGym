@@ -1,0 +1,46 @@
+:host {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    box-sizing: border-box;
+}
+
+.stat-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.value {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.time {
+    color: #1680EA;
+}
+
+.volume, .series {
+    color: #000000;
+}
+
+.terminar-btn {
+    margin-left: auto;
+}

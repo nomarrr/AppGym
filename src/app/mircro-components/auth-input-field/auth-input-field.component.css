@@ -1,0 +1,19 @@
+input{
+    width: 65%; /* Ocupa todo el ancho disponible */
+    padding: 10px; /* Espacio interno para hacer el campo más grande */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #000000; /* Color del texto */
+    background-color: #F3F3F3; /* Color de fondo */
+    border: none;
+    border-bottom: 1px solid #000000; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    transition: border 0.3s ease;
+}
+
+input:focus{
+    border: 1px solid #007bff; /* Aplica un borde completo y cambia de color */
+    outline: none; /* Elimina el contorno predeterminado */
+    border-radius: 5px; /* Mantiene el borde redondeado */
+}
