@@ -1,0 +1,7 @@
+<div>
+    <app-muscular-group-card 
+        *ngFor="let group of muscularGroups"
+        [muscularGroup]="group"
+        (select)="selectGroup(group)">
+    </app-muscular-group-card>
+</div>

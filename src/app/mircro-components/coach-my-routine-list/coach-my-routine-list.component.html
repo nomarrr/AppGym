@@ -1,0 +1,16 @@
+<div>
+    <app-coach-routine-card 
+        *ngFor="let routine of routines"
+        [routineName]="routine.name"
+        [routineId]="routine.id">
+    </app-coach-routine-card>
+    
+    <div class="buttons">
+        <app-grey-btn 
+            buttonText="Crear nueva rutina" 
+            imgSrc="img/Create.png" 
+            buttonWidth="250px"
+            (buttonClick)="navigateToCreateRoutine()">
+        </app-grey-btn>
+    </div>
+</div>

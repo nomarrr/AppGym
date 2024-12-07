@@ -1,0 +1,41 @@
+:host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.exercise-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.exercise-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 98%;
+    padding: 5px 10px; /* Añade espacio adicional solo a los lados */
+    margin: 0;
+    border: 1px solid #7F8084;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.exercise-header img {
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.exercise-header label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}

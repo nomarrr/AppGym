@@ -1,0 +1,47 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <div class="form-container">
+                <label class="label">Agregar ejercicio</label>
+                
+                <input type="file" 
+                       id="fileInput" 
+                       accept="image/*" 
+                       style="display: none;"
+                       (change)="onFileSelected($event)">
+                <img [src]="previewUrl || 'img/Camera.png'" 
+                     alt="Upload" 
+                     class="camera-icon">
+                <label for="fileInput" class="blueLabel">
+                    {{ fileName || 'Agregar imagen' }}
+                </label>
+
+                <input type="text" 
+                       class="auth-input" 
+                       [(ngModel)]="exercise.name"
+                       placeholder="Nombre del ejercicio">
+
+                <textarea class="auth-input"
+                         [(ngModel)]="exercise.description"
+                         placeholder="Descripción del ejercicio">
+                </textarea>
+
+                <button class="dropdown-button" 
+                        type="button"
+                        (click)="navigateToMuscleGroupSelection()">
+                    {{ selectedMuscularGroup?.name || 'Seleccionar grupo muscular' }}
+                    <img src="img/Foward.png" alt="arrow" class="arrow-icon">
+                </button>
+
+                <app-btn 
+                  buttonText="Agregar ejercicio" 
+                  [buttonWidth]="'100%'" 
+                  [buttonFontSize]="'16px'"
+                  [disabled]="isLoading"
+                  (buttonClick)="saveExercise()">
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</body>

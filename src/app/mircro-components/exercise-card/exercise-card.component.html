@@ -25,8 +25,11 @@
               <input type="number" formControlName="reps" placeholder="REPS" />
             </td>
             <td>
-              <input type="checkbox" [formControlName]="'completed'" class="custom-checkbox" id="check-{{serie.index}}">
-              <label for="check-{{serie.index}}">
+              <input type="checkbox" 
+                     [formControlName]="'completed'" 
+                     class="custom-checkbox" 
+                     [id]="serie.uniqueId">
+              <label [for]="serie.uniqueId">
                 <img *ngIf="!serie.form.get('completed')?.value" src="img/check2.png" class="check-icon"/>
                 <img *ngIf="serie.form.get('completed')?.value" src="img/check2-green.png" class="check-icon"/>
               </label>
@@ -35,26 +38,7 @@
         </tbody>
       </table>
 
-      <div class="exercise-options">
-        <img src="img/up.png" class="action-button" (click)="moveUp()">
-        <div class="buttons-container">
-          <app-btn buttonText="Eliminar serie" 
-                   buttonWidth="100%" 
-                   buttonFontSize="16px" 
-                   type="button"
-                   (click)="removeSet()"></app-btn>
-          <app-btn buttonText="Agregar serie" 
-                   buttonWidth="100%" 
-                   buttonFontSize="16px" 
-                   type="button"
-                   (click)="addSet()"></app-btn>
-          <app-btn buttonText="Eliminar ejercicio" 
-                   buttonWidth="100%" 
-                   buttonFontSize="16px" 
-                   type="button"></app-btn>
-        </div>
-        <img src="img/down.png" class="action-button" (click)="moveDown()">
-      </div>
+      
     </form>
   </div>
 </div>

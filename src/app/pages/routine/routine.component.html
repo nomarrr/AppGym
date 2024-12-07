@@ -2,10 +2,20 @@
     <div class="container">
         <app-sidebar></app-sidebar>
         <div class="content">
-            <app-routine-header [volumen]=10 [series]=1></app-routine-header>
-            <app-exercise-card></app-exercise-card>
-            <app-exercise-card></app-exercise-card>
-
+            <app-routine-header 
+                [volumen]="totalVolume"
+                [series]="completedSets">
+            </app-routine-header>
+            
+            <app-exercise-card 
+                *ngFor="let exercise of exercises"
+                [exerciseId]="exercise.id"
+                [imageUrl]="exercise.image_url"
+                [exerciseName]="exercise.name"
+                [numberOfSets]="exercise.sets"
+                (volumenTotalChange)="onVolumenChange($event)"
+                (setCompleted)="onSetCompleted($event)">
+            </app-exercise-card>
         </div>
     </div>
 </body>

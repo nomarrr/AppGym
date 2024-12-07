@@ -5,8 +5,8 @@ import { BtnComponent } from '../btn/btn.component';
 
 @Component({
   selector: 'app-edit-exercise-card',
-  standalone: true, // Indica que este es un componente standalone
-  imports: [ReactiveFormsModule, CommonModule, BtnComponent], // IMPORTA ReactiveFormsModule AQUÍ
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, BtnComponent],
   templateUrl: './edit-exercise-card.component.html',
   styleUrls: ['./edit-exercise-card.component.css'],
 })
@@ -14,9 +14,16 @@ export class EditExerciseCardComponent implements OnInit {
   @Input() imageUrl: string = 'exerciseImg/incline-bench-press.jpg';
   @Input() exerciseName: string = 'Press de Banca Inclinado';
   @Input() numberOfSets: number = 3;
+  @Input() exerciseId: number = 0;
+  @Input() position: number = 0;
+  @Input() isFirst: boolean = false;
+  @Input() isLast: boolean = false;
+  @Output() setsChanged = new EventEmitter<number>();
+  @Output() positionChanged = new EventEmitter<{exerciseId: number, direction: 'up' | 'down'}>();
+  @Output() exerciseDeleted = new EventEmitter<number>();
 
   exerciseForm!: FormGroup;
-  series: { index: number, form: FormGroup }[] = []; // Array para manejar series con sus índices
+  series: { index: number, form: FormGroup }[] = [];
   private completedSets: number = 0;
   @Output() volumenTotalChange = new EventEmitter<number>();
   volumenTotal: number = 0;
@@ -28,25 +35,59 @@ export class EditExerciseCardComponent implements OnInit {
       sets: this.fb.array([])
     });
 
-    // Crear las series con sus índices
+    // Inicializar las series con el número proporcionado
     for (let i = 0; i < this.numberOfSets; i++) {
-      const setForm = this.fb.group({
-        kg: ['', Validators.required],
-        reps: ['', Validators.required],
-        completed: [false]
-      });
-      
-      this.sets.push(setForm);
-      this.series.push({ 
-        index: i + 1, 
-        form: setForm 
-      });
-
-      // Suscribirse a los cambios de kg, reps y completed
-      this.subscribeToFormChanges(setForm);
+      this.addInitialSet(i + 1);
     }
 
     this.updateCompletedSets();
+  }
+
+  private addInitialSet(index: number) {
+    const setForm = this.fb.group({
+      kg: ['', Validators.required],
+      reps: ['', Validators.required],
+      completed: [false]
+    });
+    
+    this.sets.push(setForm);
+    this.series.push({ 
+      index: index, 
+      form: setForm 
+    });
+
+    this.subscribeToFormChanges(setForm);
+  }
+
+  addSet() {
+    const newIndex = this.series.length + 1;
+    const newSet = {
+      index: newIndex,
+      form: this.fb.group({
+        kg: [''],
+        reps: [''],
+        completed: [false]
+      })
+    };
+    this.series.push(newSet);
+    this.subscribeToFormChanges(newSet.form);
+    this.numberOfSets = this.series.length; // Actualizar el número de series
+    this.setsChanged.emit(this.numberOfSets);
+    console.log('Series actuales:', this.numberOfSets);
+  }
+
+  removeSet() {
+    if (this.series.length > 1) {
+      this.series.pop();
+      this.updateCompletedSets();
+      this.numberOfSets = this.series.length; // Actualizar el número de series
+      this.setsChanged.emit(this.numberOfSets);
+      console.log('Series actuales:', this.numberOfSets);
+    }
+  }
+
+  get sets(): FormArray {
+    return this.exerciseForm.get('sets') as FormArray;
   }
 
   private subscribeToFormChanges(form: FormGroup) {
@@ -68,10 +109,6 @@ export class EditExerciseCardComponent implements OnInit {
     form.get('completed')?.valueChanges.subscribe(() => {
       this.updateCompletedSets();
     });
-  }
-
-  get sets(): FormArray {
-    return this.exerciseForm.get('sets') as FormArray;
   }
 
   onSubmit(): void {
@@ -103,36 +140,25 @@ export class EditExerciseCardComponent implements OnInit {
     this.volumenTotalChange.emit(this.volumenTotal);
   }
 
-  addSet() {
-    const newIndex = this.series.length + 1;
-    const newSet = {
-      index: newIndex,
-      form: this.fb.group({
-        kg: [''],
-        reps: [''],
-        completed: [false]
-      })
-    };
-    this.series.push(newSet);
-    
-    // Suscribirse a los cambios del nuevo set
-    this.subscribeToFormChanges(newSet.form);
-  }
-
-  removeSet() {
-    if (this.series.length > 1) {
-      this.series.pop();
-      this.updateCompletedSets();
+  moveUp() {
+    if (!this.isFirst) {
+      this.positionChanged.emit({
+        exerciseId: this.exerciseId,
+        direction: 'up'
+      });
     }
   }
 
-  moveUp() {
-    // Lógica para mover el ejercicio hacia arriba
-    console.log('Moving exercise up');
+  moveDown() {
+    if (!this.isLast) {
+      this.positionChanged.emit({
+        exerciseId: this.exerciseId,
+        direction: 'down'
+      });
+    }
   }
 
-  moveDown() {
-    // Lógica para mover el ejercicio hacia abajo
-    console.log('Moving exercise down');
+  deleteExercise() {
+    this.exerciseDeleted.emit(this.exerciseId);
   }
 }

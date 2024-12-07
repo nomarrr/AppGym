@@ -1,0 +1,8 @@
+<div>
+    <h1>{{ muscleGroup }}</h1>
+    <app-exercise-card2 
+        *ngFor="let exercise of exercises"
+        [imageUrl]="exercise.image_url"
+        [exerciseName]="exercise.name">
+    </app-exercise-card2>
+</div>

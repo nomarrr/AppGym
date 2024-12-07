@@ -1,17 +1,136 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoachSidebarComponent } from '../../mircro-components/coach-sidebar/coach-sidebar.component';
 import { EditRoutineHeaderComponent } from '../../mircro-components/edit-routine-header/edit-routine-header.component';
 import { EditRoutineNameComponent } from '../../mircro-components/edit-routine-name/edit-routine-name.component';
 import { GreyBtnComponent } from '../../mircro-components/grey-btn/grey-btn.component';
 import { EditExerciseCardComponent } from '../../mircro-components/edit-exercise-card/edit-exercise-card.component';
+import { RoutineService } from '../../services/routine.service';
 
 @Component({
   selector: 'app-edit-routine',
   standalone: true,
-  imports: [CoachSidebarComponent, EditRoutineHeaderComponent, EditRoutineNameComponent, GreyBtnComponent, EditExerciseCardComponent],
+  imports: [
+    CommonModule,
+    CoachSidebarComponent, 
+    EditRoutineHeaderComponent, 
+    EditRoutineNameComponent, 
+    GreyBtnComponent, 
+    EditExerciseCardComponent
+  ],
   templateUrl: './edit-routine.component.html',
   styleUrl: './edit-routine.component.css'
 })
-export class EditRoutineComponent {
+export class EditRoutineComponent implements OnInit {
+  routineId: number = 0;
+  exercises: any[] = [];
+  totalSets: number = 0;
+  totalExercises: number = 0;
+  routineName: string = '';
 
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private routineService: RoutineService
+  ) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.routineId = +params['id'];
+      console.log('ID de rutina a editar:', this.routineId);
+      
+      if (this.routineId) {
+        this.loadRoutine();
+        this.loadExercises();
+      }
+    });
+  }
+
+  private loadRoutine() {
+    this.routineService.getRoutine(this.routineId).subscribe({
+      next: (routine: {id: number, name: string}) => {
+        this.routineName = routine.name;
+      },
+      error: (error: any) => {
+        console.error('Error cargando rutina:', error);
+      }
+    });
+  }
+
+  private loadExercises() {
+    this.routineService.getRoutineExercises(this.routineId).subscribe({
+      next: (exercises) => {
+        console.log('Ejercicios cargados:', exercises);
+        this.exercises = exercises;
+        this.updateTotals();
+      },
+      error: (error) => {
+        console.error('Error cargando ejercicios:', error);
+      }
+    });
+  }
+
+  onSetsChanged(index: number, newSetsCount: number) {
+    if (this.exercises[index]) {
+      this.exercises[index].sets = newSetsCount;
+      this.updateTotals();
+    }
+  }
+
+  private updateTotals() {
+    this.totalExercises = this.exercises.length;
+    this.totalSets = this.exercises.reduce((total, exercise) => total + exercise.sets, 0);
+  }
+
+  onPositionChanged(event: {exerciseId: number, direction: 'up' | 'down'}) {
+    const currentIndex = this.exercises.findIndex(ex => ex.id === event.exerciseId);
+    if (currentIndex === -1) return;
+
+    let newIndex: number;
+    if (event.direction === 'up' && currentIndex > 0) {
+      newIndex = currentIndex - 1;
+    } else if (event.direction === 'down' && currentIndex < this.exercises.length - 1) {
+      newIndex = currentIndex + 1;
+    } else {
+      return;
+    }
+
+    const tempExercises = [...this.exercises];
+    [tempExercises[currentIndex], tempExercises[newIndex]] = 
+    [tempExercises[newIndex], tempExercises[currentIndex]];
+    
+    this.exercises = tempExercises;
+    this.routineService.updateExercisesOrder(this.routineId, this.exercises);
+  }
+
+  onExerciseDeleted(exerciseId: number) {
+    const index = this.exercises.findIndex(ex => ex.id === exerciseId);
+    if (index !== -1) {
+      this.routineService.markExerciseAsDeleted(this.routineId, exerciseId);
+      this.exercises = this.exercises.filter(ex => ex.id !== exerciseId);
+      this.updateTotals();
+      console.log(`Ejercicio ${exerciseId} eliminado temporalmente`);
+    }
+  }
+
+  navigateToSelectExercise() {
+    this.router.navigate(['/select-exercise'], {
+      queryParams: { routineId: this.routineId }
+    });
+  }
+
+  onSaveRoutine() {
+    if (this.routineId && this.exercises.length > 0) {
+      this.routineService.saveRoutineChanges(this.routineId, this.exercises)
+        .subscribe({
+          next: (response) => {
+            console.log('Rutina guardada exitosamente:', response);
+          },
+          error: (error) => {
+            console.error('Error guardando la rutina:', error);
+          }
+        });
+    }
+  }
 }

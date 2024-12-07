@@ -1,0 +1,15 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <h1>Agregar ejercicio</h1>
+            <app-exercise-list 
+                *ngFor="let group of muscleGroups"
+                [muscleGroup]="group.name"
+                [muscleGroupId]="group.id"
+                [routineId]="routineId"
+                (exerciseAdded)="onExerciseAdded($event)">
+            </app-exercise-list>
+        </div>
+    </div>
+</body>

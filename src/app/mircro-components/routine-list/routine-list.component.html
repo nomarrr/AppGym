@@ -1,6 +1,13 @@
 <div>
-    <app-routine-card routineName='Push'></app-routine-card>
-    <app-routine-card routineName='Pull'></app-routine-card>
-    <app-routine-card routineName='Legs'></app-routine-card>
-
+    <ng-container *ngIf="routines.length > 0; else noRoutines">
+        <app-routine-card 
+            *ngFor="let routine of routines"
+            [routineName]="routine.name"
+            [routineId]="routine.id">
+        </app-routine-card>
+    </ng-container>
+    
+    <ng-template #noRoutines>
+        <p>No tienes rutinas asignadas.</p>
+    </ng-template>
 </div>

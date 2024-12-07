@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-grey-btn',
@@ -8,7 +8,12 @@ import { Component, Input } from '@angular/core';
   styleUrl: './grey-btn.component.css'
 })
 export class GreyBtnComponent {
-  @Input() buttonText: string = 'Estadisticas';
-  @Input() imgSrc: string = 'img/Grey-analytics.png';
-  @Input() buttonWidth: string = '200px';
+  @Input() buttonText: string = '';
+  @Input() imgSrc: string = '';
+  @Input() buttonWidth: string = '';
+  @Output() buttonClick = new EventEmitter<void>();
+
+  onClick() {
+    this.buttonClick.emit();
+  }
 }

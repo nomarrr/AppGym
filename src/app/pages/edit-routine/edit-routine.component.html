@@ -2,10 +2,35 @@
     <div class="container">
         <app-coach-sidebar></app-coach-sidebar>
         <div class="content">
-            <app-edit-routine-header></app-edit-routine-header>
-            <app-edit-routine-name></app-edit-routine-name>
-            <app-edit-exercise-card></app-edit-exercise-card>
-            <app-grey-btn buttonText="Agregar ejercicio" imgSrc="img/Plus.png" buttonWidth="100%"></app-grey-btn>
+            <app-edit-routine-header
+                [totalExercises]="totalExercises"
+                [totalSets]="totalSets"
+                (saveRoutine)="onSaveRoutine()">
+            </app-edit-routine-header>
+            <app-edit-routine-name
+                [routineName]="routineName">
+            </app-edit-routine-name>
+            
+            <app-edit-exercise-card 
+                *ngFor="let exercise of exercises; let i = index"
+                [exerciseId]="exercise.id"
+                [position]="i"
+                [imageUrl]="exercise.image_url"
+                [exerciseName]="exercise.name"
+                [numberOfSets]="exercise.sets"
+                [isFirst]="i === 0"
+                [isLast]="i === exercises.length - 1"
+                (setsChanged)="onSetsChanged(i, $event)"
+                (positionChanged)="onPositionChanged($event)"
+                (exerciseDeleted)="onExerciseDeleted($event)">
+            </app-edit-exercise-card>
+
+            <app-grey-btn 
+                buttonText="Agregar ejercicio" 
+                imgSrc="img/Plus.png" 
+                buttonWidth="100%"
+                (buttonClick)="navigateToSelectExercise()">
+            </app-grey-btn>
         </div>
     </div>
 </body>

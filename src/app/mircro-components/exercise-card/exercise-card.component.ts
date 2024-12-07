@@ -14,11 +14,13 @@ export class ExerciseCardComponent implements OnInit {
   @Input() imageUrl: string = 'exerciseImg/incline-bench-press.jpg';
   @Input() exerciseName: string = 'Press de Banca Inclinado';
   @Input() numberOfSets: number = 3;
+  @Input() exerciseId: number = 0;
 
   exerciseForm!: FormGroup;
-  series: { index: number, form: FormGroup }[] = []; // Array para manejar series con sus índices
+  series: { index: number, form: FormGroup, uniqueId: string }[] = []; // Array para manejar series con sus índices
   private completedSets: number = 0;
   @Output() volumenTotalChange = new EventEmitter<number>();
+  @Output() setCompleted = new EventEmitter<boolean>();
   volumenTotal: number = 0;
 
   constructor(private fb: FormBuilder) {}
@@ -39,7 +41,8 @@ export class ExerciseCardComponent implements OnInit {
       this.sets.push(setForm);
       this.series.push({ 
         index: i + 1, 
-        form: setForm 
+        form: setForm,
+        uniqueId: `exercise-${this.exerciseId}-set-${i + 1}`
       });
 
       // Suscribirse a los cambios de kg, reps y completed
@@ -50,24 +53,21 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   private subscribeToFormChanges(form: FormGroup) {
-    // Suscribirse a cambios en kg
-    form.get('kg')?.valueChanges.subscribe(() => {
-      if (form.get('completed')?.value === true) {
-        this.updateCompletedSets();
-      }
-    });
-
-    // Suscribirse a cambios en reps
-    form.get('reps')?.valueChanges.subscribe(() => {
-      if (form.get('completed')?.value === true) {
-        this.updateCompletedSets();
-      }
-    });
-
-    // Suscribirse a cambios en completed
-    form.get('completed')?.valueChanges.subscribe(() => {
+    form.get('completed')?.valueChanges.subscribe((isCompleted) => {
+      // Emitir el evento solo cuando cambia el estado de completed
+      this.setCompleted.emit(isCompleted);
       this.updateCompletedSets();
     });
+
+    // Suscribirse a cambios en kg y reps solo para actualizar el volumen
+    const updateVolumen = () => {
+      if (form.valid && form.get('completed')?.value === true) {
+        this.updateCompletedSets();
+      }
+    };
+
+    form.get('kg')?.valueChanges.subscribe(updateVolumen);
+    form.get('reps')?.valueChanges.subscribe(updateVolumen);
   }
 
   get sets(): FormArray {
@@ -85,22 +85,24 @@ export class ExerciseCardComponent implements OnInit {
       serie.form.get('completed')?.value === true
     ).length;
 
-    // Recalcular el volumen total
-    this.volumenTotal = 0;
+    // Recalcular el volumen total desde cero
+    let nuevoVolumen = 0;
     this.series.forEach(serie => {
       if (serie.form.get('completed')?.value === true) {
         const kg = serie.form.get('kg')?.value || 0;
         const reps = serie.form.get('reps')?.value || 0;
-        this.volumenTotal += kg * reps;
-        
+        nuevoVolumen += kg * reps;
         console.log(`Serie ${serie.index} completada: ${kg}kg x ${reps} repeticiones`);
       }
     });
     
-    console.log(`Volumen total actual: ${this.volumenTotal}kg`);
+    console.log(`Volumen anterior: ${this.volumenTotal}kg`);
+    console.log(`Nuevo volumen: ${nuevoVolumen}kg`);
     
-    // Emitir el nuevo valor
-    this.volumenTotalChange.emit(this.volumenTotal);
+    // Emitir la diferencia entre el nuevo volumen y el anterior
+    const diferencia = nuevoVolumen - this.volumenTotal;
+    this.volumenTotal = nuevoVolumen;
+    this.volumenTotalChange.emit(diferencia);
   }
 
   addSet() {
@@ -111,7 +113,8 @@ export class ExerciseCardComponent implements OnInit {
         kg: [''],
         reps: [''],
         completed: [false]
-      })
+      }),
+      uniqueId: `exercise-${this.exerciseId}-set-${newIndex}`
     };
     this.series.push(newSet);
     

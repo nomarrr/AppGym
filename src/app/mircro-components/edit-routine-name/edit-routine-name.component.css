@@ -26,4 +26,16 @@ label{
     font-family: Arial, sans-serif;
     font-size: 20px;
     flex-grow: 1;
+    cursor: pointer;
+}
+
+input {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
 }

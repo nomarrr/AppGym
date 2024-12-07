@@ -1,0 +1,21 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <div class="button-container">
+                <app-grey-btn 
+                    buttonText="Agregar ejercicio" 
+                    imgSrc="img/Plus.png" 
+                    buttonWidth="1250px"
+                    (buttonClick)="navigateToAddExercise()">
+                </app-grey-btn>
+            </div>
+            
+            <app-exercises 
+                *ngFor="let group of muscleGroups"
+                [muscleGroup]="group.name"
+                [muscleGroupId]="group.id">
+            </app-exercises>
+        </div>
+    </div>
+</body> 

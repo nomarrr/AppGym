@@ -1,13 +1,17 @@
-<div class="header-container">
-    <div class="stat-group">
-        <span class="label">Series</span>
-        <span class="value volume">{{ sets }}</span>
+<div class="header">
+    <div class="info">
+        <div class="stat">
+            <label>Ejercicios: <span class="number">{{totalExercises}}</span></label>
+        </div>
+        <div class="stat">
+            <label>Series: <span class="number">{{totalSets}}</span></label>
+        </div>
     </div>
-
-    <div class="stat-group">
-        <span class="label">Ejercicios</span>
-        <span class="value series">{{ exercises }}</span>
-    </div>
-
-    <app-btn class="terminar-btn" buttonText="Terminar" buttonWidth="10%" buttonFontSize="16px" type="button"></app-btn>
+    <app-btn 
+        buttonText="Guardar" 
+        [buttonWidth]="'100px'" 
+        [buttonFontSize]="'16px'"
+        type="button"
+        (click)="onSave()">
+    </app-btn>
 </div>

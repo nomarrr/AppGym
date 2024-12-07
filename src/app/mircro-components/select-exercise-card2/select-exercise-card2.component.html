@@ -1,0 +1,14 @@
+<div class="exercise-container">
+    <div class="exercise-header">
+        <img [src]="imageUrl" alt="Exercise Image" />
+        <label>{{ exerciseName }}</label>
+        <app-btn 
+            buttonText="Agregar" 
+            [buttonWidth]="'100px'" 
+            [buttonFontSize]="'16px'"
+            type="button"
+            class="add-button"
+            (click)="onAdd()">
+        </app-btn>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-<div>
+<div class="routine-name">
     <label>{{ routineName }}</label>
-    <img src="img/X.png">
+    <img *ngIf="routineName !== 'Nombre de la rutina'" 
+         src="img/X.png" 
+         (click)="clearText()">
 </div>

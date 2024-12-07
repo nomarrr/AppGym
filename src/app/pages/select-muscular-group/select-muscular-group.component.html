@@ -1,0 +1,11 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <h1>Grupo muscular</h1>
+            <app-muscular-group-list
+                (groupSelected)="onGroupSelected($event)">
+            </app-muscular-group-list>
+        </div>
+    </div>
+</body>
