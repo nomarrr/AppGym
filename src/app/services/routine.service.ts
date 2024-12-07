@@ -136,12 +136,12 @@ export class RoutineService {
     this.exerciseOrderMap.delete(routineId);
   }
 
-  saveRoutineChanges(routineId: number, exercises: any[]): Observable<any> {
+  saveRoutineChanges(routineId: number, exercises: any[], routineName: string): Observable<any> {
     const currentExercises = this.exerciseOrderMap.get(routineId) || exercises;
 
     const payload = {
       routine_id: routineId,
-      name: "Rutina",
+      name: routineName,
       exercises: currentExercises.map((exercise, index) => ({
         exercise_id: exercise.id,
         sets: exercise.sets,
@@ -152,6 +152,8 @@ export class RoutineService {
     console.log('Payload de la rutina editada:', JSON.stringify(payload, null, 2));
 
     const headers = this.getHeaders();
+
+    console.log('Headers:', headers);
 
     return this.http.put(`${this.apiUrl}/routines/${routineId}/exercises`, payload, { headers }).pipe(
       map(() => {
@@ -180,10 +182,10 @@ export class RoutineService {
     console.log('Nuevo orden:', reorderedExercises);
   }
 
-  getRoutine(routineId: number): Observable<{id: number, name: string}> {
+  getRoutine(routineId: number): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get<{id: number, name: string}>(`${this.apiUrl}/routines/${routineId}/`, { headers }).pipe(
-      tap(routine => console.log('Rutina cargada:', routine)),
+    return this.http.get(`${this.apiUrl}/routines/${routineId}`, { headers }).pipe(
+      tap(routine => console.log('Datos de rutina recibidos:', routine)),
       catchError(this.handleError)
     );
   }

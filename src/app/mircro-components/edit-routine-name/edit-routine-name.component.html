@@ -1,5 +1,13 @@
 <div class="routine-name">
-    <label>{{ routineName }}</label>
+    <div *ngIf="!isEditing" class="label-container" (click)="startEditing()">
+        <label>{{ routineName }}</label>
+    </div>
+    <input *ngIf="isEditing"
+           type="text"
+           [(ngModel)]="tempName"
+           (blur)="onBlur()"
+           (keydown)="onKeyDown($event)"
+           autofocus>
     <img *ngIf="routineName !== 'Nombre de la rutina'" 
          src="img/X.png" 
          (click)="clearText()">

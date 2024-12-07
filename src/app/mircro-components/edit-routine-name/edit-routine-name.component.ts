@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,8 +11,36 @@ import { FormsModule } from '@angular/forms';
 })
 export class EditRoutineNameComponent {
   @Input() routineName: string = 'Nombre de la rutina';
+  @Output() routineNameChange = new EventEmitter<string>();
+  
+  isEditing: boolean = false;
+  tempName: string = '';
+
+  startEditing() {
+    this.tempName = this.routineName;
+    this.isEditing = true;
+  }
+
+  onBlur() {
+    if (this.tempName.trim()) {
+      this.routineName = this.tempName;
+      this.routineNameChange.emit(this.routineName);
+    } else {
+      this.tempName = this.routineName;
+    }
+    this.isEditing = false;
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.target?.dispatchEvent(new Event('blur'));
+    }
+  }
 
   clearText() {
-    this.routineName = 'Nombre de la rutina';
+    this.tempName = 'Nombre de la rutina';
+    this.routineName = this.tempName;
+    this.routineNameChange.emit(this.routineName);
   }
 }

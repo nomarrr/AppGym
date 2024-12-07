@@ -8,7 +8,8 @@
                 (saveRoutine)="onSaveRoutine()">
             </app-edit-routine-header>
             <app-edit-routine-name
-                [routineName]="routineName">
+                [routineName]="routineName"
+                (routineNameChange)="onRoutineNameChange($event)">
             </app-edit-routine-name>
             
             <app-edit-exercise-card 

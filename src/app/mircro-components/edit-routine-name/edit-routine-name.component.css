@@ -1,4 +1,4 @@
-div{
+.routine-name {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -7,25 +7,30 @@ div{
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-
 }
 
-div img{
-    width: 35px;
-    height: 35px;
+.label-container {
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    transition: transform 0.2s;
+    flex-grow: 1;
 }
 
-div img:hover {
-    transform: scale(1.1);
+.edit-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    opacity: 0.5;
 }
 
-label{
+.label-container:hover .edit-icon {
+    opacity: 1;
+}
+
+label {
     color: #7F8084;
     font-family: Arial, sans-serif;
     font-size: 20px;
-    flex-grow: 1;
     cursor: pointer;
 }
 
@@ -38,4 +43,15 @@ input {
     outline: none;
     background: transparent;
     padding: 0;
+}
+
+img {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+img:hover {
+    transform: scale(1.1);
 }

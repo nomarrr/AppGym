@@ -7,6 +7,7 @@ import { EditRoutineNameComponent } from '../../mircro-components/edit-routine-n
 import { GreyBtnComponent } from '../../mircro-components/grey-btn/grey-btn.component';
 import { EditExerciseCardComponent } from '../../mircro-components/edit-exercise-card/edit-exercise-card.component';
 import { RoutineService } from '../../services/routine.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-routine',
@@ -27,7 +28,7 @@ export class EditRoutineComponent implements OnInit {
   exercises: any[] = [];
   totalSets: number = 0;
   totalExercises: number = 0;
-  routineName: string = '';
+  routineName: string = 'Nombre de la rutina';
 
   constructor(
     private route: ActivatedRoute,
@@ -49,10 +50,11 @@ export class EditRoutineComponent implements OnInit {
 
   private loadRoutine() {
     this.routineService.getRoutine(this.routineId).subscribe({
-      next: (routine: {id: number, name: string}) => {
+      next: (routine) => {
+        console.log('Rutina cargada:', routine);
         this.routineName = routine.name;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.error('Error cargando rutina:', error);
       }
     });
@@ -120,9 +122,25 @@ export class EditRoutineComponent implements OnInit {
     });
   }
 
+  onRoutineNameChange(newName: string) {
+    console.log('Cambiando nombre de rutina a:', newName);
+    this.routineName = newName;
+  }
+
   onSaveRoutine() {
     if (this.routineId && this.exercises.length > 0) {
-      this.routineService.saveRoutineChanges(this.routineId, this.exercises)
+      this.routineService.saveRoutineChanges(this.routineId, this.exercises, this.routineName)
+        .pipe(
+          finalize(() => {
+            console.log('Finalizando operación de guardado');
+            setTimeout(() => {
+              console.log('Navegando a coach-routines...');
+              this.router.navigate(['/coach-routines'])
+                .then(() => console.log('Navegación exitosa'))
+                .catch(err => console.error('Error en la navegación:', err));
+            }, 100);
+          })
+        )
         .subscribe({
           next: (response) => {
             console.log('Rutina guardada exitosamente:', response);
