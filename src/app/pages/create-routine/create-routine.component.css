@@ -8,6 +8,7 @@ html, body {
 .container{
     display: flex;
     height: 100vh;
+    overflow: hidden; /* Evita scroll en el contenedor principal */
 }
 
 .content{
@@ -16,6 +17,29 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto; /* Permite scroll vertical solo en el contenido */
+    overflow-x: hidden; /* Esconde el scroll horizontal */
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Estilizar la barra de scroll */
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .content h1{

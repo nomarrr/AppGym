@@ -23,6 +23,7 @@ interface MuscleGroup {
 export class SelectExerciseComponent implements OnInit {
   muscleGroups: MuscleGroup[] = [];
   routineId: number = 0;
+  mode: string = 'edit';
 
   constructor(
     private muscularGroupService: MuscularGroupService,
@@ -34,8 +35,9 @@ export class SelectExerciseComponent implements OnInit {
   ngOnInit() {
     this.loadMuscleGroups();
     this.route.queryParams.subscribe(params => {
+      this.mode = params['mode'] || 'edit';
       this.routineId = +params['routineId'];
-      console.log('ID de rutina:', this.routineId);
+      console.log('SelectExerciseComponent - Modo:', this.mode, 'ID de rutina:', this.routineId);
     });
   }
 
@@ -51,16 +53,34 @@ export class SelectExerciseComponent implements OnInit {
     });
   }
 
-  onExerciseAdded(exercise: any) {
-    const routineId = this.getRoutineIdFromUrl();
-    if (routineId) {
-      this.routineService.addTemporaryExercise(routineId, exercise);
-      this.router.navigate(['/edit-routine', routineId]);
-    }
-  }
+  onExerciseAdded(exercise: Exercise) {
+    const exerciseToAdd = {
+      ...exercise,
+      sets: 1,
+      uniqueId: Date.now()
+    };
 
-  private getRoutineIdFromUrl(): number {
-    const routineId = this.route.snapshot.queryParams['routineId'];
-    return parseInt(routineId, 10);
+    if (this.mode === 'create') {
+      let currentExercises = [];
+      const savedExercises = localStorage.getItem('tempExercises');
+      
+      if (savedExercises) {
+        try {
+          currentExercises = JSON.parse(savedExercises);
+        } catch (e) {
+          console.error('Error al parsear ejercicios:', e);
+          currentExercises = [];
+        }
+      }
+
+      currentExercises.push(exerciseToAdd);
+      localStorage.setItem('tempExercises', JSON.stringify(currentExercises));
+      this.router.navigate(['/create-routine']);
+    } else {
+      if (this.routineId) {
+        this.routineService.addTemporaryExercise(this.routineId, exerciseToAdd);
+        this.router.navigate(['/edit-routine', this.routineId]);
+      }
+    }
   }
 }

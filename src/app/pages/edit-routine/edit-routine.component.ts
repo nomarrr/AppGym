@@ -106,14 +106,10 @@ export class EditRoutineComponent implements OnInit {
     this.routineService.updateExercisesOrder(this.routineId, this.exercises);
   }
 
-  onExerciseDeleted(exerciseId: number) {
-    const index = this.exercises.findIndex(ex => ex.id === exerciseId);
-    if (index !== -1) {
-      this.routineService.markExerciseAsDeleted(this.routineId, exerciseId);
-      this.exercises = this.exercises.filter(ex => ex.id !== exerciseId);
-      this.updateTotals();
-      console.log(`Ejercicio ${exerciseId} eliminado temporalmente`);
-    }
+  onExerciseDeleted(uniqueId: number) {
+   this.exercises = this.exercises.filter(ex => ex.uniqueId !== uniqueId);
+    this.updateTotals();
+    console.log(`Ejercicio con uniqueId ${uniqueId} eliminado`);
   }
 
   navigateToSelectExercise() {
@@ -129,26 +125,30 @@ export class EditRoutineComponent implements OnInit {
 
   onSaveRoutine() {
     if (this.routineId && this.exercises.length > 0) {
-      this.routineService.saveRoutineChanges(this.routineId, this.exercises, this.routineName)
-        .pipe(
-          finalize(() => {
-            console.log('Finalizando operación de guardado');
-            setTimeout(() => {
-              console.log('Navegando a coach-routines...');
-              this.router.navigate(['/coach-routines'])
-                .then(() => console.log('Navegación exitosa'))
-                .catch(err => console.error('Error en la navegación:', err));
-            }, 100);
-          })
-        )
-        .subscribe({
-          next: (response) => {
-            console.log('Rutina guardada exitosamente:', response);
-          },
-          error: (error) => {
-            console.error('Error guardando la rutina:', error);
-          }
-        });
+      this.routineService.saveRoutineChanges(
+       this.routineId, 
+        this.exercises.map(exercise => ({
+          ...exercise,
+          exercise_id: exercise.id // Aseguramos usar el ID original para el backend
+        })), 
+        this.routineName
+      ).pipe(
+        finalize(() => {
+          console.log('Finalizando operación de guardado');
+          setTimeout(() => {
+            this.router.navigate(['/coach-routines'])
+              .then(() => console.log('Navegación exitosa'))
+              .catch(err => console.error('Error en la navegación:', err));
+          }, 100);
+        })
+      ).subscribe({
+        next: (response) => {
+          console.log('Rutina guardada exitosamente:', response);
+        },
+        error: (error) => {
+          console.error('Error guardando la rutina:', error);
+        }
+      });
     }
   }
 }

@@ -17,6 +17,7 @@ export class ExerciseListComponent implements OnInit {
   @Input() muscleGroup: string = 'Pecho';
   @Input() muscleGroupId: number = 1;
   @Input() routineId: number = 0;
+  @Input() mode: string = 'edit';
   @Output() exerciseAdded = new EventEmitter<Exercise>();
   
   exercises: Exercise[] = [];
@@ -47,12 +48,6 @@ export class ExerciseListComponent implements OnInit {
   }
 
   onAddExercise(exercise: Exercise) {
-    if (this.routineId) {
-      // Agregar el ejercicio temporalmente
-      this.routineService.addTemporaryExercise(this.routineId, exercise);
-      
-      // Navegar de vuelta a la página de edición
-      this.router.navigate(['/edit-routine', this.routineId]);
-    }
+    this.exerciseAdded.emit(exercise);
   }
 }

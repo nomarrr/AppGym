@@ -19,6 +19,7 @@ import { EditRoutineComponent } from './pages/edit-routine/edit-routine.componen
 import { SelectExerciseCard2Component } from './mircro-components/select-exercise-card2/select-exercise-card2.component';
 import { ExerciseListComponent } from './mircro-components/exercise-list/exercise-list.component';
 import { SelectExerciseComponent } from './pages/select-exercise/select-exercise.component';
+import { CreateRoutineComponent } from './pages/create-routine/create-routine.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -51,6 +52,10 @@ export const routes: Routes = [
   {
     path: 'exercise-card2',
     component: ExerciseCard2Component
+  },
+  {
+    path: 'create-routine',
+    component: CreateRoutineComponent
   },
   {
     path: 'coach-routine-list',
