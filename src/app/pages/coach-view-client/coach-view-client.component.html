@@ -2,7 +2,6 @@
     <div class="container">
         <app-coach-sidebar></app-coach-sidebar>
         <div class="content">
-            <h1>Clientes</h1>
             <div class="profile">
                 <div class="container2">
                     <div class="pfp">
@@ -15,13 +14,18 @@
                 </div>
                 <div class="stats-group">
                     <label class="label">Entrenamientos</label>
-                    <label class="blackLabel">100</label>
+                    <label class="blackLabel">{{workouts}}</label>
                 </div>
-                <div class="buttons">
+                <div class="buttons" *ngIf="isResponsible">
                     <app-grey-btn buttonText="Estadisticas" imgSrc="img/Grey-analytics.png"></app-grey-btn>
                     <app-grey-btn buttonText="Rutinas" imgSrc="img/Grey-dumbbell.png"></app-grey-btn>
                 </div>
             </div>
+            <app-btn 
+                *ngIf="!isResponsible" 
+                buttonText="Agregar cliente"
+                (click)="assignClient()">
+            </app-btn>
         </div>
     </div>
 </body>

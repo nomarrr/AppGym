@@ -20,6 +20,7 @@ import { SelectExerciseCard2Component } from './mircro-components/select-exercis
 import { ExerciseListComponent } from './mircro-components/exercise-list/exercise-list.component';
 import { SelectExerciseComponent } from './pages/select-exercise/select-exercise.component';
 import { CreateRoutineComponent } from './pages/create-routine/create-routine.component';
+import { CoachViewClientComponent } from './pages/coach-view-client/coach-view-client.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -100,6 +101,10 @@ export const routes: Routes = [
   {
     path: 'select-muscular-group',
     component: SelectMuscularGroupComponent
+  },
+  {
+    path: 'coach-view-client/:id',
+    component: CoachViewClientComponent
   },
   { 
     path: '', 

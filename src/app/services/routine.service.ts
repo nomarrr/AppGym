@@ -87,9 +87,12 @@ export class RoutineService {
           return this.exerciseOrderMap.get(routineId)!;
         }
 
-        const filteredExercises = exercises.filter(exercise => 
-          !this.temporarilyDeletedExercises.has(exercise.id)
-        );
+        const filteredExercises = exercises
+          .filter(exercise => !this.temporarilyDeletedExercises.has(exercise.id))
+          .map(exercise => ({
+            ...exercise,
+            uniqueId: Date.now() + Math.random()
+          }));
         
         const tempExercises = this.temporarilyAddedExercises.get(routineId) || [];
         const orderedExercises = [...filteredExercises, ...tempExercises];

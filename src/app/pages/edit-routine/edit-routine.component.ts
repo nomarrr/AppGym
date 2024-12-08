@@ -86,7 +86,7 @@ export class EditRoutineComponent implements OnInit {
   }
 
   onPositionChanged(event: {exerciseId: number, direction: 'up' | 'down'}) {
-    const currentIndex = this.exercises.findIndex(ex => ex.id === event.exerciseId);
+    const currentIndex = this.exercises.findIndex(ex => ex.uniqueId === event.exerciseId);
     if (currentIndex === -1) return;
 
     let newIndex: number;
@@ -106,10 +106,14 @@ export class EditRoutineComponent implements OnInit {
     this.routineService.updateExercisesOrder(this.routineId, this.exercises);
   }
 
-  onExerciseDeleted(uniqueId: number) {
-   this.exercises = this.exercises.filter(ex => ex.uniqueId !== uniqueId);
-    this.updateTotals();
-    console.log(`Ejercicio con uniqueId ${uniqueId} eliminado`);
+  onExerciseDeleted(exerciseId: number) {
+    const exercise = this.exercises.find(ex => ex.uniqueId === exerciseId);
+    if (exercise) {
+      this.routineService.markExerciseAsDeleted(this.routineId, exercise.id);
+      this.exercises = this.exercises.filter(ex => ex.uniqueId !== exerciseId);
+      this.updateTotals();
+    }
+    console.log(`Ejercicio con uniqueId ${exerciseId} eliminado`);
   }
 
   navigateToSelectExercise() {
