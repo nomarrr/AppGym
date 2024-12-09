@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ClientCardComponent } from '../../mircro-components/client-card/client-card.component';
 import { CoachSidebarComponent } from '../../mircro-components/coach-sidebar/coach-sidebar.component';
 import { BtnComponent } from "../../mircro-components/btn/btn.component";
@@ -21,7 +22,10 @@ interface Client {
 export class CoachDashboardComponent implements OnInit {
   clients: Client[] = [];
   
-  constructor(private coachService: CoachService) {}
+  constructor(
+    private coachService: CoachService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadClients();
@@ -41,5 +45,9 @@ export class CoachDashboardComponent implements OnInit {
 
   get myClients(): number {
     return this.clients.length;
+  }
+
+  navigateToUnassignedClients() {
+    this.router.navigate(['/unassigned-clients']);
   }
 }

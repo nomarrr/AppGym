@@ -23,6 +23,7 @@ import { CreateRoutineComponent } from './pages/create-routine/create-routine.co
 import { CoachViewClientComponent } from './pages/coach-view-client/coach-view-client.component';
 import { ClientRoutinesComponent } from './pages/client-routines/client-routines.component';
 import { AssignExistentRoutineClientComponent } from './pages/assign-existent-routine-client/assign-existent-routine-client.component';
+import { UnassignedClientsComponent } from './pages/unassigned-clients/unassigned-clients.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -133,6 +134,12 @@ export const routes: Routes = [
   {
     path: 'client-routines/:id',
     component: ClientRoutinesComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'unassigned-clients',
+    component: UnassignedClientsComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
   },

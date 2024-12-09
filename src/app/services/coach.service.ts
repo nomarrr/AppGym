@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { tap, catchError } from 'rxjs/operators';
 
 interface Client {
   id: number;
@@ -26,24 +27,39 @@ export class CoachService {
 
   constructor(private http: HttpClient) {}
 
-  getClients(): Observable<Client[]> {
+  private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something went wrong; please try again later.'));
+  }
+
+  getClients(): Observable<Client[]> {
+    const headers = this.getHeaders();
     return this.http.get<Client[]>(`${this.apiUrl}/coach/clients`, { headers });
   }
 
   getClientDetail(clientId: number): Observable<ClientDetail> {
-    const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
+    const headers = this.getHeaders();
     return this.http.get<ClientDetail>(`${this.apiUrl}/coach-view-client/${clientId}`, { headers });
   }
 
   assignClient(clientId: number): Observable<any> {
-    const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
+    const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/coach/assign-client/${clientId}`, {}, { headers });
+  }
+
+  getUnassignedClients(): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/clients/unassigned`, { headers }).pipe(
+      tap(response => console.log('Clientes sin asignar:', response)),
+      catchError(this.handleError)
+    );
   }
 } 
