@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { StatsCardComponent } from '../stats-card/stats-card.component';
+
 @Component({
   selector: 'app-stats-list',
   standalone: true,
@@ -8,5 +9,9 @@ import { StatsCardComponent } from '../stats-card/stats-card.component';
   styleUrl: './stats-list.component.css'
 })
 export class StatsListComponent {
+  @Output() statSelected = new EventEmitter<string>();
 
+  onStatSelected(statName: string) {
+    this.statSelected.emit(statName);
+  }
 }

@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../mircro-components/sidebar/sidebar.component';
 import { RoutineHeaderComponent } from '../../mircro-components/routine-header/routine-header.component';
 import { ExerciseCardComponent } from '../../mircro-components/exercise-card/exercise-card.component';
 import { RoutineService } from '../../services/routine.service';
+
+interface SetData {
+  weight: number;
+  reps: number;
+  date: string;
+}
+
+interface ExerciseData {
+  id: number;
+  sets: number;
+  sets_data: SetData[];
+}
 
 @Component({
   selector: 'app-routine',
@@ -20,12 +32,14 @@ import { RoutineService } from '../../services/routine.service';
 })
 export class RoutineComponent implements OnInit {
   exercises: any[] = [];
+  exercisesData: { [key: number]: ExerciseData } = {};
   totalVolume: number = 0;
   completedSets: number = 0;
   routineId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private routineService: RoutineService
   ) {}
 
@@ -44,7 +58,6 @@ export class RoutineComponent implements OnInit {
     this.routineService.getRoutineExercises(this.routineId).subscribe({
       next: (exercises) => {
         this.exercises = exercises;
-        this.completedSets = 0;
         console.log('Exercises loaded:', exercises);
       },
       error: (error) => {
@@ -53,17 +66,66 @@ export class RoutineComponent implements OnInit {
     });
   }
 
+  onSetCompleted(event: { exerciseId: number, setNumber: number, weight: number, reps: number }) {
+    if (!this.exercisesData[event.exerciseId]) {
+      this.exercisesData[event.exerciseId] = {
+        id: event.exerciseId,
+        sets: 0,
+        sets_data: []
+      };
+    }
+
+    this.exercisesData[event.exerciseId].sets_data[event.setNumber - 1] = {
+      weight: event.weight,
+      reps: event.reps,
+      date: new Date().toISOString()
+    };
+
+    console.log('Set completado:', this.exercisesData);
+  }
+
   onVolumenChange(volumeDifference: number) {
     this.totalVolume += volumeDifference;
     console.log('Nuevo volumen total:', this.totalVolume);
   }
 
-  onSetCompleted(completed: boolean) {
-    if (completed) {
-      this.completedSets++;
-    } else if (this.completedSets > 0) {
-      this.completedSets--;
-    }
-    console.log('Sets completados:', this.completedSets);
+  onFinishWorkout() {
+    const currentDate = new Date().toISOString();
+    const userId = parseInt(localStorage.getItem('userId') || '0');
+
+    const workout = {
+      workout: {
+        name: `Workout ${currentDate}`,
+        user_id: userId,
+        routine_id: this.routineId,
+        date: currentDate
+      },
+      workout_exercises: this.exercises.map((exercise) => {
+        const exerciseData = this.exercisesData[exercise.id] || {
+          sets_data: []
+        };
+        
+        return {
+          exercise_id: exercise.id,
+          sets: exercise.sets,
+          position: exercise.position,
+          sets_data: exerciseData.sets_data.filter(set => set !== undefined)
+        };
+      })
+    };
+
+    console.log('Enviando workout data:', workout);
+
+    this.routineService.saveWorkout(workout).subscribe({
+      next: (response) => {
+        console.log('Workout guardado exitosamente:', response);
+        alert('¡Entrenamiento completado con éxito!');
+        this.router.navigate(['/my-routines']);
+      },
+      error: (error) => {
+        console.error('Error al guardar el workout:', error);
+        alert('Error al guardar el entrenamiento. Por favor, intenta de nuevo.');
+      }
+    });
   }
 }

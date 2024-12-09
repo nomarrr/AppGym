@@ -5,8 +5,8 @@ import { BtnComponent } from '../btn/btn.component';
 
 @Component({
   selector: 'app-exercise-card',
-  standalone: true, // Indica que este es un componente standalone
-  imports: [ReactiveFormsModule, CommonModule, BtnComponent], // IMPORTA ReactiveFormsModule AQUÍ
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, BtnComponent],
   templateUrl: './exercise-card.component.html',
   styleUrls: ['./exercise-card.component.css'],
 })
@@ -17,10 +17,15 @@ export class ExerciseCardComponent implements OnInit {
   @Input() exerciseId: number = 0;
 
   exerciseForm!: FormGroup;
-  series: { index: number, form: FormGroup, uniqueId: string }[] = []; // Array para manejar series con sus índices
+  series: { index: number, form: FormGroup, uniqueId: string }[] = [];
   private completedSets: number = 0;
   @Output() volumenTotalChange = new EventEmitter<number>();
-  @Output() setCompleted = new EventEmitter<boolean>();
+  @Output() setCompleted = new EventEmitter<{
+    exerciseId: number,
+    setNumber: number,
+    weight: number,
+    reps: number
+  }>();
   volumenTotal: number = 0;
 
   constructor(private fb: FormBuilder) {}
@@ -30,12 +35,11 @@ export class ExerciseCardComponent implements OnInit {
       sets: this.fb.array([])
     });
 
-    // Crear las series con sus índices
     for (let i = 0; i < this.numberOfSets; i++) {
       const setForm = this.fb.group({
-        kg: ['', Validators.required],
-        reps: ['', Validators.required],
-        completed: [false]
+        kg: ['', [Validators.required, Validators.min(0)]],
+        reps: ['', [Validators.required, Validators.min(0)]],
+        completed: [{ value: false, disabled: true }]
       });
       
       this.sets.push(setForm);
@@ -45,29 +49,48 @@ export class ExerciseCardComponent implements OnInit {
         uniqueId: `exercise-${this.exerciseId}-set-${i + 1}`
       });
 
-      // Suscribirse a los cambios de kg, reps y completed
-      this.subscribeToFormChanges(setForm);
+      // Suscribirse a los cambios
+      this.subscribeToFormChanges(setForm, i);
     }
-
-    this.updateCompletedSets();
   }
 
-  private subscribeToFormChanges(form: FormGroup) {
-    form.get('completed')?.valueChanges.subscribe((isCompleted) => {
-      // Emitir el evento solo cuando cambia el estado de completed
-      this.setCompleted.emit(isCompleted);
-      this.updateCompletedSets();
-    });
+  private subscribeToFormChanges(form: FormGroup, index: number) {
+    // Observar cambios en kg y reps
+    const kgControl = form.get('kg');
+    const repsControl = form.get('reps');
+    const completedControl = form.get('completed');
 
-    // Suscribirse a cambios en kg y reps solo para actualizar el volumen
-    const updateVolumen = () => {
-      if (form.valid && form.get('completed')?.value === true) {
-        this.updateCompletedSets();
+    // Función para verificar si se pueden habilitar los checkboxes
+    const checkEnableCompleted = () => {
+      const isValid = kgControl?.valid && repsControl?.valid &&
+                     kgControl?.value > 0 && repsControl?.value > 0;
+      
+      if (isValid) {
+        completedControl?.enable();
+      } else {
+        completedControl?.disable();
+        if (completedControl?.value) {
+          completedControl?.setValue(false);
+        }
       }
     };
 
-    form.get('kg')?.valueChanges.subscribe(updateVolumen);
-    form.get('reps')?.valueChanges.subscribe(updateVolumen);
+    // Suscribirse a cambios en kg y reps
+    kgControl?.valueChanges.subscribe(() => checkEnableCompleted());
+    repsControl?.valueChanges.subscribe(() => checkEnableCompleted());
+
+    // Suscribirse a cambios en completed
+    completedControl?.valueChanges.subscribe((isCompleted) => {
+      if (isCompleted) {
+        this.setCompleted.emit({
+          exerciseId: this.exerciseId,
+          setNumber: index + 1,
+          weight: kgControl?.value || 0,
+          reps: repsControl?.value || 0
+        });
+      }
+      this.updateCompletedSets();
+    });
   }
 
   get sets(): FormArray {
@@ -119,7 +142,7 @@ export class ExerciseCardComponent implements OnInit {
     this.series.push(newSet);
     
     // Suscribirse a los cambios del nuevo set
-    this.subscribeToFormChanges(newSet.form);
+    this.subscribeToFormChanges(newSet.form, newIndex - 1);
   }
 
   removeSet() {
@@ -137,5 +160,37 @@ export class ExerciseCardComponent implements OnInit {
   moveDown() {
     // Lógica para mover el ejercicio hacia abajo
     console.log('Moving exercise down');
+  }
+
+  isSetCompletable(form: FormGroup): boolean {
+    const kg = form.get('kg')?.value;
+    const reps = form.get('reps')?.value;
+    return form.valid && kg > 0 && reps > 0;
+  }
+
+  getSetStatusImage(form: FormGroup): string {
+    if (!this.isSetCompletable(form)) {
+      return 'assets/icons/unchecked-disabled.svg';
+    }
+    return form.get('completed')?.value ? 
+      'assets/icons/checked.svg' : 
+      'assets/icons/unchecked.svg';
+  }
+
+  toggleSetCompletion(serie: { form: FormGroup, index: number }) {
+    const form = serie.form;
+    if (this.isSetCompletable(form)) {
+      const currentValue = form.get('completed')?.value;
+      form.get('completed')?.setValue(!currentValue);
+    }
+  }
+
+  getSetStatusTitle(form: FormGroup): string {
+    if (!this.isSetCompletable(form)) {
+      return 'Ingresa peso y repeticiones primero';
+    }
+    return form.get('completed')?.value ? 
+      'Click para desmarcar set' : 
+      'Click para marcar set como completado';
   }
 }

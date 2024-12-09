@@ -14,5 +14,12 @@
         <span class="value series">{{ series }}</span>
     </div>
 
-    <app-btn class="terminar-btn" buttonText="Terminar" buttonWidth="10%" buttonFontSize="16px" type="button"></app-btn>
+    <app-btn 
+        class="terminar-btn" 
+        buttonText="Terminar" 
+        buttonWidth="10%" 
+        buttonFontSize="16px" 
+        type="button"
+        (click)="onFinishClick()">
+    </app-btn>
 </div>

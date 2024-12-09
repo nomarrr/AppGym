@@ -25,7 +25,7 @@ export class SidebarComponent {
         this.router.navigate(['/nutrition']);
         break;
       case 'estadisticas':
-        this.router.navigate(['/statistics']);
+        this.router.navigate(['/client-stats']);
         break;
       case 'escaner':
         this.router.navigate(['/scanner']);

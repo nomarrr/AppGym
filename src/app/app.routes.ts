@@ -24,6 +24,10 @@ import { CoachViewClientComponent } from './pages/coach-view-client/coach-view-c
 import { ClientRoutinesComponent } from './pages/client-routines/client-routines.component';
 import { AssignExistentRoutineClientComponent } from './pages/assign-existent-routine-client/assign-existent-routine-client.component';
 import { UnassignedClientsComponent } from './pages/unassigned-clients/unassigned-clients.component';
+import { ClientStatsComponent } from './pages/client-stats/client-stats.component';
+import { GeneralVolumeComponent } from './mircro-components/general-volume/general-volume.component';
+import { StatsComponent } from './pages/stats/stats.component';
+
 export const routes: Routes = [
   { 
     path: 'login',
@@ -86,6 +90,16 @@ export const routes: Routes = [
     component: SelectExerciseComponent
   },
   {
+    path: 'general-volume',
+    component: GeneralVolumeComponent
+  },
+  {
+    path: 'client-stats',
+    component: ClientStatsComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
+  },
+  {
     path: 'exercise-list',
     component: ExerciseListComponent
   },
@@ -142,6 +156,12 @@ export const routes: Routes = [
     component: UnassignedClientsComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
+  },
+  { 
+    path: 'stats',
+    component: StatsComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
   },
   { 
     path: '', 

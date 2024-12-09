@@ -237,6 +237,11 @@ export class RoutineService {
     );
   }
 
+  saveWorkout(workoutData: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(`${this.apiUrl}/workouts`, workoutData, { headers });
+  }
+
 
 }
 

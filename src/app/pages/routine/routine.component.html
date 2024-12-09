@@ -4,7 +4,8 @@
         <div class="content">
             <app-routine-header 
                 [volumen]="totalVolume"
-                [series]="completedSets">
+                [series]="completedSets"
+                (finishWorkout)="onFinishWorkout()">
             </app-routine-header>
             
             <app-exercise-card 

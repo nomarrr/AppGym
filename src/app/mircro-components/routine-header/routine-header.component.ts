@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 import { BtnComponent } from '../btn/btn.component';
 
@@ -16,6 +16,8 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
   intervalId: any;
   @Input() volumen: number = 0;
   @Input() series: number = 0;
+  @Output() finishWorkout = new EventEmitter<void>();
+
   ngOnInit() {
     this.iniciarCronometro();
   }
@@ -63,5 +65,10 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
     tiempoFormateado += `${segundos}s`;
     
     return tiempoFormateado;
+  }
+
+  onFinishClick() {
+    this.pausarCronometro();
+    this.finishWorkout.emit();
   }
 }
