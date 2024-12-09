@@ -21,6 +21,7 @@ import { ExerciseListComponent } from './mircro-components/exercise-list/exercis
 import { SelectExerciseComponent } from './pages/select-exercise/select-exercise.component';
 import { CreateRoutineComponent } from './pages/create-routine/create-routine.component';
 import { CoachViewClientComponent } from './pages/coach-view-client/coach-view-client.component';
+import { ClientRoutinesComponent } from './pages/client-routines/client-routines.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -105,6 +106,10 @@ export const routes: Routes = [
   {
     path: 'coach-view-client/:id',
     component: CoachViewClientComponent
+  },
+  {
+    path: 'client-routines/:id',
+    component: ClientRoutinesComponent
   },
   { 
     path: '', 

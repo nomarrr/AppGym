@@ -18,7 +18,11 @@
                 </div>
                 <div class="buttons" *ngIf="isResponsible">
                     <app-grey-btn buttonText="Estadisticas" imgSrc="img/Grey-analytics.png"></app-grey-btn>
-                    <app-grey-btn buttonText="Rutinas" imgSrc="img/Grey-dumbbell.png"></app-grey-btn>
+                    <app-grey-btn 
+                        buttonText="Rutinas" 
+                        imgSrc="img/Grey-dumbbell.png"
+                        (click)="verRutinas()">
+                    </app-grey-btn>
                 </div>
             </div>
             <app-btn 

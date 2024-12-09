@@ -1,7 +1,11 @@
 <div>
-    <app-coach-routine-card routineName="Push"></app-coach-routine-card>
-    <app-coach-routine-card routineName="Pull"></app-coach-routine-card>
-    <app-coach-routine-card routineName="Legs"></app-coach-routine-card>
+    <app-coach-routine-card 
+        *ngFor="let routine of routines"
+        [routineName]="routine.name"
+        [routineId]="routine.id"
+        [isClientView]="true">
+    </app-coach-routine-card>
+    
     <div class="buttons">
         <app-grey-btn buttonText="Asignar nueva rutina" imgSrc="img/Create.png" buttonWidth="250px"></app-grey-btn>
         <app-grey-btn buttonText="Asignar rutina existente" imgSrc="img/Assign.png" buttonWidth="250px"></app-grey-btn>

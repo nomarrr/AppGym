@@ -200,6 +200,14 @@ export class RoutineService {
     );
   }
 
+  unassignRoutine(clientId: number, routineId: number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.delete(`${this.apiUrl}/users/${clientId}/routines/${routineId}`, { headers }).pipe(
+      tap(response => console.log('Rutina desasignada:', response)),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Ocurrió un error:', error);
     return throwError(() => error);

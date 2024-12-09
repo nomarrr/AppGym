@@ -63,4 +63,10 @@ export class CoachViewClientComponent implements OnInit {
       }
     });
   }
+
+  verRutinas() {
+    this.router.navigate(['/client-routines', this.clientId], {
+      state: { clientName: this.clientName }
+    });
+  }
 }
