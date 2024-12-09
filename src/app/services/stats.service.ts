@@ -29,4 +29,8 @@ export class StatsService {
     const headers = this.getHeaders();
     return this.http.get<WorkoutVolume[]>(`${this.apiUrl}/workouts/volume`, { headers });
   }
+
+  getMuscleGroupVolumeData() {
+    return this.http.get<any>(`${this.apiUrl}/workouts/volume/muscle-groups`, { headers: this.getHeaders() });
+  }
 } 

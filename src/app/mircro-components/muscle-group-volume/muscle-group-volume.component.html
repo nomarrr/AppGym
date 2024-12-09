@@ -1,0 +1,10 @@
+<div>
+    <h3>Volumen por Grupo Muscular</h3>
+    <div class="chart-container">
+        <canvas id="muscleGroupChart"></canvas>
+    </div>
+    <div *ngFor="let group of muscleGroups" class="best-volume">
+        <span class="label">Mejor volumen total para {{group.name}}</span>
+        <span class="value">{{group.bestVolume}}kg</span>
+    </div>
+</div>

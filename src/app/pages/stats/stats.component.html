@@ -3,6 +3,7 @@
         <app-sidebar></app-sidebar>
         <div class="content">
             <app-general-volume *ngIf="selectedStat === 'Volumen general'"></app-general-volume>
+            <app-muscle-group-volume *ngIf="selectedStat === 'Volumen por grupo muscular'"></app-muscle-group-volume>
         </div>
     </div>
 </body>

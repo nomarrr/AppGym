@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../mircro-components/sidebar/sidebar.component';
 import { StatsListComponent } from '../../mircro-components/stats-list/stats-list.component';
 import { GeneralVolumeComponent } from '../../mircro-components/general-volume/general-volume.component';
+import { MuscleGroupVolumeComponent } from '../../mircro-components/muscle-group-volume/muscle-group-volume.component';
 import { StatsStateService } from '../../services/stats-state.service';
 
 @Component({
   selector: 'app-stats',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, StatsListComponent, GeneralVolumeComponent],
+  imports: [
+    CommonModule, 
+    SidebarComponent, 
+    StatsListComponent, 
+    GeneralVolumeComponent,
+    MuscleGroupVolumeComponent
+  ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.css'
 })
