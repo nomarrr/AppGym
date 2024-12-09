@@ -4,9 +4,11 @@
         <div class="content">
             <h1>Asignar rutina {{clientName}}</h1>
             <div class="clients">
-                <app-add-routine-card routineName="Rutina 1"></app-add-routine-card>
-                <app-add-routine-card routineName="Rutina 2"></app-add-routine-card>
-                <app-add-routine-card routineName="Rutina 3"></app-add-routine-card>
+                <app-add-routine-card 
+                    *ngFor="let routine of routines"
+                    [routineName]="routine.name"
+                    [routineId]="routine.id">
+                </app-add-routine-card>
             </div>
         </div>
     </div>

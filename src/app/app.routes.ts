@@ -22,6 +22,7 @@ import { SelectExerciseComponent } from './pages/select-exercise/select-exercise
 import { CreateRoutineComponent } from './pages/create-routine/create-routine.component';
 import { CoachViewClientComponent } from './pages/coach-view-client/coach-view-client.component';
 import { ClientRoutinesComponent } from './pages/client-routines/client-routines.component';
+import { AssignExistentRoutineClientComponent } from './pages/assign-existent-routine-client/assign-existent-routine-client.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -57,15 +58,27 @@ export const routes: Routes = [
   },
   {
     path: 'create-routine',
-    component: CreateRoutineComponent
+    component: CreateRoutineComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'assign-existent-routine-client/:id',
+    component: AssignExistentRoutineClientComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'coach-routine-list',
-    component: CoachRoutineListComponent
+    component: CoachRoutineListComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'coach-my-routine-list',
-    component: CoachMyRoutineListComponent
+    component: CoachMyRoutineListComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'select-exercise',
@@ -77,11 +90,15 @@ export const routes: Routes = [
   },
   {
     path: 'edit-routine/:id',
-    component: EditRoutineComponent
+    component: EditRoutineComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'coach-routines',
-    component: CoachRoutinesComponent
+    component: CoachRoutinesComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'select-exercise-card2',
@@ -93,11 +110,15 @@ export const routes: Routes = [
   },
   {
     path: 'exercise-panel',
-    component: ExercisePanelComponent
+    component: ExercisePanelComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'add-exercise',
-    component: AddExerciseComponent
+    component: AddExerciseComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'select-muscular-group',
@@ -105,11 +126,15 @@ export const routes: Routes = [
   },
   {
     path: 'coach-view-client/:id',
-    component: CoachViewClientComponent
+    component: CoachViewClientComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'client-routines/:id',
-    component: ClientRoutinesComponent
+    component: ClientRoutinesComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   { 
     path: '', 

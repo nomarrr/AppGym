@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoutineService } from '../../services/routine.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoachRoutineCardComponent } from '../coach-routine-card/coach-routine-card.component';
 import { GreyBtnComponent } from '../grey-btn/grey-btn.component';
 
@@ -14,18 +14,19 @@ import { GreyBtnComponent } from '../grey-btn/grey-btn.component';
 })
 export class CoachRoutineListComponent implements OnInit {
   routines: any[] = [];
+  clientId: number = 0;
 
   constructor(
     private routineService: RoutineService,
-    private route: ActivatedRoute
-  ) {}
+    private router: Router
+  ) {
+    const urlParts = window.location.pathname.split('/');
+    this.clientId = parseInt(urlParts[urlParts.length - 1]);
+  }
 
   ngOnInit() {
-    const urlParts = window.location.pathname.split('/');
-    const clientId = parseInt(urlParts[urlParts.length - 1]);
-    
-    if (clientId) {
-      this.loadRoutines(clientId);
+    if (this.clientId) {
+      this.loadRoutines(this.clientId);
     }
   }
 
@@ -36,6 +37,19 @@ export class CoachRoutineListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar las rutinas:', error);
+      }
+    });
+  }
+
+  navigateToAssignRoutine() {
+    this.router.navigate(['/assign-existent-routine-client', this.clientId]);
+  }
+
+  navigateToCreateRoutine() {
+    this.router.navigate(['/create-routine'], {
+      state: { 
+        assignToClientId: this.clientId,
+        isAssigningToClient: true
       }
     });
   }

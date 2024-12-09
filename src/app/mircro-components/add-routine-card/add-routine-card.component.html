@@ -1,5 +1,9 @@
 <div class="routine">
     <label>{{routineName}}</label>
-    <app-btn buttonText="Agregar" [buttonWidth]="'100%'" [buttonFontSize]="'16px'" >
-</app-btn>
+    <app-btn 
+        buttonText="Agregar" 
+        [buttonWidth]="'100%'" 
+        [buttonFontSize]="'16px'"
+        (click)="assignRoutine()">
+    </app-btn>
 </div>

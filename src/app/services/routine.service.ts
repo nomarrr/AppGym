@@ -212,4 +212,32 @@ export class RoutineService {
     console.error('Ocurrió un error:', error);
     return throwError(() => error);
   }
+
+  
+  assignRoutine(clientId: number, routineId: number): Observable<any> {
+    const headers = this.getHeaders();
+    
+    return this.http.post(
+      `${this.apiUrl}/users/${clientId}/routines/${routineId}`, 
+      {}, 
+      { headers }
+    ).pipe(
+      tap(response => console.log('Rutina asignada:', response)),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error al asignar rutina:', error);
+        
+        if (error.status === 403) {
+          return throwError(() => new Error('No tienes permiso para asignar esta rutina'));
+        } else if (error.status === 400) {
+          return throwError(() => new Error('Esta rutina ya está asignada al cliente'));
+        } else {
+          return throwError(() => new Error('Error al asignar la rutina'));
+        }
+      })
+    );
+  }
+
+
 }
+
+

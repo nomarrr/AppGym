@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { RoutineService } from '../../services/routine.service';
 import { CoachSidebarComponent } from '../../mircro-components/coach-sidebar/coach-sidebar.component';
 import { EditRoutineHeaderComponent } from '../../mircro-components/edit-routine-header/edit-routine-header.component';
@@ -27,11 +28,20 @@ export class CreateRoutineComponent implements OnInit {
   totalSets: number = 0;
   totalExercises: number = 0;
   routineName: string = 'Nombre de la rutina';
+  private assignToClientId?: number;
+  private isAssigningToClient: boolean = false;
 
   constructor(
     private router: Router,
-    private routineService: RoutineService
-  ) {}
+    private routineService: RoutineService,
+    private location: Location
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.assignToClientId = navigation.extras.state['assignToClientId'];
+      this.isAssigningToClient = navigation.extras.state['isAssigningToClient'];
+    }
+  }
 
   ngOnInit() {
     console.log('CreateRoutineComponent - ngOnInit');
@@ -80,15 +90,29 @@ export class CreateRoutineComponent implements OnInit {
     console.log('Payload de la rutina nueva:', JSON.stringify(payload, null, 2));
     
     this.routineService.createRoutine(payload).subscribe({
-      next: (response) => {
-        console.log('Rutina creada exitosamente:', response);
-        localStorage.removeItem('tempExercises');
-        localStorage.removeItem('tempRoutineName');
-        this.router.navigate(['/coach-routines']);
+      next: (response: any) => {
+        console.log('Respuesta de crear rutina:', response);
+        
+        if (this.isAssigningToClient && this.assignToClientId && response.routine_id) {
+          this.routineService.assignRoutine(this.assignToClientId, response.routine_id).subscribe({
+            next: () => {
+              console.log('Rutina creada y asignada exitosamente');
+              this.location.back();
+            },
+            error: (error) => {
+              console.error('Error al asignar la rutina:', error);
+              alert('La rutina se creó pero no se pudo asignar al cliente');
+              this.location.back();
+            }
+          });
+        } else {
+          console.log('Rutina creada exitosamente');
+          this.router.navigate(['/coach-routines']);
+        }
       },
       error: (error) => {
         console.error('Error al crear la rutina:', error);
-        // Aquí podrías agregar un manejo de errores más amigable para el usuario
+        alert('Error al crear la rutina');
       }
     });
   }
