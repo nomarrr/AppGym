@@ -1,0 +1,10 @@
+<div>
+    <h3>Series por Grupo Muscular</h3>
+    <div class="chart-container">
+        <canvas id="muscleGroupSetsChart"></canvas>
+    </div>
+    <div *ngFor="let group of muscleGroups" class="best-sets">
+        <span class="label">Mayor número de series para {{group.name}}</span>
+        <span class="value">{{group.bestSets}} series</span>
+    </div>
+</div>

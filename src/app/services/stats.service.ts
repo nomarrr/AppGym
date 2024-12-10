@@ -33,4 +33,12 @@ export class StatsService {
   getMuscleGroupVolumeData() {
     return this.http.get<any>(`${this.apiUrl}/workouts/volume/muscle-groups`, { headers: this.getHeaders() });
   }
+
+  getMuscleGroupSetsData() {
+    return this.http.get<any>(`${this.apiUrl}/workouts/sets/muscle-groups`, { headers: this.getHeaders() });
+  }
+
+  getUserWeights() {
+    return this.http.get<any>(`${this.apiUrl}/user/weights`, { headers: this.getHeaders() });
+  }
 } 

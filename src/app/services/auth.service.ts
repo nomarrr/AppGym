@@ -75,6 +75,9 @@ export class AuthService {
       case UserRole.COACH:
         this.router.navigate(['/coach-dashboard']);
         break;
+      case UserRole.ADMIN:
+        this.router.navigate(['/admin-dashboard']);
+        break;
       default:
         console.log('Rol no reconocido:', userRole);
         this.router.navigate(['/login']);

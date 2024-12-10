@@ -27,6 +27,10 @@ import { UnassignedClientsComponent } from './pages/unassigned-clients/unassigne
 import { ClientStatsComponent } from './pages/client-stats/client-stats.component';
 import { GeneralVolumeComponent } from './mircro-components/general-volume/general-volume.component';
 import { StatsComponent } from './pages/stats/stats.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { CoachClientCardComponent } from './mircro-components/coach-client-card/coach-client-card.component';
+import { AdminClientListComponent } from './mircro-components/admin-client-list/admin-client-list.component';
+import { AddCoachComponent } from './pages/add-coach/add-coach.component';
 
 export const routes: Routes = [
   { 
@@ -90,8 +94,16 @@ export const routes: Routes = [
     component: SelectExerciseComponent
   },
   {
+    path:'admin-client-list',
+    component: AdminClientListComponent
+  },
+  {
     path: 'general-volume',
     component: GeneralVolumeComponent
+  },
+  {
+    path:'coach-client-card',
+    component: CoachClientCardComponent
   },
   {
     path: 'client-stats',
@@ -162,6 +174,18 @@ export const routes: Routes = [
     component: StatsComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
+  },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'add-coach',
+    component: AddCoachComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]   
   },
   { 
     path: '', 

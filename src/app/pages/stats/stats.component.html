@@ -4,6 +4,8 @@
         <div class="content">
             <app-general-volume *ngIf="selectedStat === 'Volumen general'"></app-general-volume>
             <app-muscle-group-volume *ngIf="selectedStat === 'Volumen por grupo muscular'"></app-muscle-group-volume>
+            <app-muscle-group-sets *ngIf="selectedStat === 'Series por grupo muscular'"></app-muscle-group-sets>
+            <app-user-weight *ngIf="selectedStat === 'Peso corporal'"></app-user-weight>
         </div>
     </div>
 </body>

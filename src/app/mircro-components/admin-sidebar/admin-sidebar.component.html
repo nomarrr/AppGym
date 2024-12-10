@@ -1,0 +1,40 @@
+<nav class="sidebar">
+    <ul>
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'Coaches'"
+           (click)="setActiveItem('Coaches')">
+        <img src="img/Name Tag.png">
+        <label>Coaches</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'Clientes'"
+           (click)="setActiveItem('Clientes')">
+        <img src="img/Search Client.png">
+        <label>Clientes</label>
+      </div>
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'Membresias'"
+           (click)="setActiveItem('Membresias')">
+        <img src="img/Membership Card.png">
+        <label>Membresias</label>
+      </div>
+  
+  
+      <div class="sidebar-item"
+           [class.active]="activeItem === 'Estadisticas'"
+           (click)="setActiveItem('Estadisticas')">
+        <img src="img/Combo Chart.png">
+        <label>Estadisticas</label>
+      </div>
+  
+      <div class="sidebar-item logout"
+           [class.active]="activeItem === 'logout'"
+           (click)="setActiveItem('logout')">
+        <img src="img/Logout Rounded.png">
+        <label>Cerrar sesion</label>
+      </div>
+    </ul>
+</nav>
+  

@@ -5,6 +5,8 @@ import { StatsListComponent } from '../../mircro-components/stats-list/stats-lis
 import { GeneralVolumeComponent } from '../../mircro-components/general-volume/general-volume.component';
 import { MuscleGroupVolumeComponent } from '../../mircro-components/muscle-group-volume/muscle-group-volume.component';
 import { StatsStateService } from '../../services/stats-state.service';
+import { MuscleGroupSetsComponent } from '../../mircro-components/muscle-group-sets/muscle-group-sets.component';
+import { UserWeightComponent } from '../../mircro-components/user-weight/user-weight.component';
 
 @Component({
   selector: 'app-stats',
@@ -14,7 +16,9 @@ import { StatsStateService } from '../../services/stats-state.service';
     SidebarComponent, 
     StatsListComponent, 
     GeneralVolumeComponent,
-    MuscleGroupVolumeComponent
+    MuscleGroupVolumeComponent,
+    MuscleGroupSetsComponent,
+    UserWeightComponent
   ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.css'

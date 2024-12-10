@@ -1,0 +1,24 @@
+<body>
+    <div class="container">
+        <app-admin-sidebar></app-admin-sidebar>
+        <div class="content">
+            <h1>Coaches</h1>
+            <div class="coaches">
+                <app-client-card 
+                    *ngFor="let coach of coaches"
+                    [clientName]="coach.name"
+                    [clientId]="coach.id"
+                    [imageUrl]="coach.image_url">
+                </app-client-card>
+                
+                <div class="info-row">
+                    <div class="labels-group">
+                        <label class="label">Total Coaches</label>
+                        <label class="blueLabel">{{totalCoaches}}</label>
+                    </div>
+                    <app-btn buttonText="Agregar Coach" (click)="navigateToNewCoach()"></app-btn>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
