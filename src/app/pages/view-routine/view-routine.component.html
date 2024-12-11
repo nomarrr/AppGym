@@ -1,0 +1,21 @@
+<div class="container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="content">
+        <app-admin-routine-header
+            [totalExercises]="totalExercises"
+            [totalSets]="totalSets">
+        </app-admin-routine-header>
+
+        <app-admin-routine-name
+            [routineName]="routineName">
+        </app-admin-routine-name>
+        
+        <app-exercise-card3 
+            *ngFor="let exercise of exercises"
+            [exerciseId]="exercise.id"
+            [imageUrl]="exercise.image_url"
+            [exerciseName]="exercise.name"
+            [numberOfSets]="exercise.sets">
+        </app-exercise-card3>
+    </div>
+</div>

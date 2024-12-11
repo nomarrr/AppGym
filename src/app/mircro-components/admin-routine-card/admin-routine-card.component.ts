@@ -21,7 +21,9 @@ export class AdminRoutineCardComponent {
   ) {}
 
   viewRoutine() {
-    // Implementar vista de rutina
+    this.router.navigate(['/view-routine', this.routineId], {
+      state: { routineName: this.routineName }
+    });
   }
 
   deleteRoutine() {

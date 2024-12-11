@@ -1,0 +1,59 @@
+:host {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.number {
+    color: #000000;
+}
+
+.time {
+    color: #1680EA;
+}
+
+.volume, .series {
+    color: #000000;
+}
+
+.terminar-btn {
+    margin-left: auto;
+}
+.buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+

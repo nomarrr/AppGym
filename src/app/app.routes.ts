@@ -34,6 +34,8 @@ import { AddCoachComponent } from './pages/add-coach/add-coach.component';
 import { AdminProfileComponent } from './mircro-components/admin-profile/admin-profile.component';
 import { AdminViewProfileComponent } from './pages/admin-view-profile/admin-view-profile.component';
 import { ViewCoachRoutinesComponent } from './pages/view-coach-routines/view-coach-routines.component';
+import { ExerciseCard3Component } from './mircro-components/exercise-card3/exercise-card3.component';
+import { ViewRoutineComponent } from './pages/view-routine/view-routine.component';
 
 export const routes: Routes = [
   { 
@@ -103,6 +105,10 @@ export const routes: Routes = [
   {
     path: 'general-volume',
     component: GeneralVolumeComponent
+  },
+  {
+    path: 'exercise-card3',
+    component: ExerciseCard3Component
   },
   {
     path:'coach-client-card',
@@ -203,6 +209,12 @@ export const routes: Routes = [
   {
     path: 'view-coach-routines/:id',
     component: ViewCoachRoutinesComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'view-routine/:id',
+    component: ViewRoutineComponent,
     canActivate: [authGuard],
     canActivateChild: [() => roleGuard([UserRole.ADMIN])]
   },
