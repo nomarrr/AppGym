@@ -19,6 +19,14 @@ interface ClientDetail {
   is_responsible: boolean;
 }
 
+interface CoachRoutine {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  assigned_clients_count: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -60,6 +68,18 @@ export class CoachService {
     return this.http.get(`${this.apiUrl}/clients/unassigned`, { headers }).pipe(
       tap(response => console.log('Clientes sin asignar:', response)),
       catchError(this.handleError)
+    );
+  }
+
+  getCoachRoutines(coachId: number) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<CoachRoutine[]>(
+      `${environment.apiUrl}/coaches/${coachId}/routines`,
+      { headers }
     );
   }
 } 

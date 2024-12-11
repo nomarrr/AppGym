@@ -1,0 +1,16 @@
+<body>
+    <div class="container">
+        <app-admin-sidebar></app-admin-sidebar>
+        <div class="content">
+            <h1>Rutinas de {{coachName}}</h1>
+            <div class="coaches">
+                <app-admin-routine-card 
+                    *ngFor="let routine of routines"
+                    [routineName]="routine.name"
+                    [routineId]="routine.id"
+                    (routineDeleted)="onRoutineDeleted($event)">
+                </app-admin-routine-card>
+            </div>
+        </div>
+    </div>
+</body>

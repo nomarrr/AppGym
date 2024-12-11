@@ -1,0 +1,50 @@
+<div class="profile">
+    <div class="container2">
+        <div class="pfp">
+            <img [src]="imgSrc">
+        </div>
+        <div class="info">
+            <p class="blackLabel">{{clientName}}</p>
+            <p class="label">{{clientBio}}</p>
+        </div>
+    </div>
+
+    <!-- Opción 1: Cliente normal -->
+    <div *ngIf="option === 1" class="stats-group">
+        <label class="label">Entrenamientos</label>
+        <label class="blackLabel">{{workouts}}</label>
+    </div>
+
+    <!-- Opción 2: Coach -->
+     <div *ngIf="option === 2">
+        <div class="stats-group">
+            <label class="label">Clientes asignados</label>
+            <label class="blackLabel">{{assignedClients}}</label>
+        </div>
+        <div class="buttons">
+            <app-grey-btn 
+                buttonText="Rutinas" 
+                imgSrc="img/Grey-dumbbell.png"
+                (click)="viewRoutines()">
+            </app-grey-btn>
+            <app-grey-btn 
+                buttonText="Deshabilitar coach" 
+                imgSrc="img/No.png"
+                (click)="demoteCoach()">
+            </app-grey-btn>
+        </div>
+     </div>
+    
+
+    <!-- Opción 3: Membresía -->
+    <div *ngIf="option === 3">
+        <div class="stats-group">
+            <label class="label">Dias restantes de membresia</label>
+            <label class="blackLabel">{{membershipDays}}</label>
+        </div>
+        <div class="buttons">
+            <app-btn buttonText="Aumentar membresia"></app-btn>
+            <app-btn buttonText="Deshabilitar membresia"></app-btn>
+        </div>
+    </div>
+</div>

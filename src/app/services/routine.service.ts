@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 interface Routine {
   id: number;
@@ -242,6 +243,17 @@ export class RoutineService {
     return this.http.post(`${this.apiUrl}/workouts`, workoutData, { headers });
   }
 
+  deleteRoutineAdmin(routineId: number) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.delete<{message: string}>(
+      `${environment.apiUrl}/admin/routines/${routineId}`,
+      { headers }
+    );
+  }
 
 }
 

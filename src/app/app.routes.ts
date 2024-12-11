@@ -31,6 +31,9 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { CoachClientCardComponent } from './mircro-components/coach-client-card/coach-client-card.component';
 import { AdminClientListComponent } from './mircro-components/admin-client-list/admin-client-list.component';
 import { AddCoachComponent } from './pages/add-coach/add-coach.component';
+import { AdminProfileComponent } from './mircro-components/admin-profile/admin-profile.component';
+import { AdminViewProfileComponent } from './pages/admin-view-profile/admin-view-profile.component';
+import { ViewCoachRoutinesComponent } from './pages/view-coach-routines/view-coach-routines.component';
 
 export const routes: Routes = [
   { 
@@ -104,6 +107,10 @@ export const routes: Routes = [
   {
     path:'coach-client-card',
     component: CoachClientCardComponent
+  },
+  {
+    path: 'admin-profile',
+    component: AdminProfileComponent
   },
   {
     path: 'client-stats',
@@ -186,6 +193,18 @@ export const routes: Routes = [
     component: AddCoachComponent,
     canActivate: [authGuard],
     canActivateChild: [() => roleGuard([UserRole.ADMIN])]   
+  },
+  {
+    path: 'admin-view-profile/:id',
+    component: AdminViewProfileComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]   
+  },
+  {
+    path: 'view-coach-routines/:id',
+    component: ViewCoachRoutinesComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
   },
   { 
     path: '', 

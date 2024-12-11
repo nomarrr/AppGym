@@ -1,0 +1,20 @@
+<body>
+    <div class="container">
+        <app-admin-sidebar></app-admin-sidebar>
+        <div class="content">
+            <ng-container *ngIf="userData">
+                <app-admin-profile
+                    [option]="option"
+                    [clientId]="userId"
+                    [clientName]="userData.name"
+                    [clientBio]="userData.bio"
+                    [imgSrc]="userData.image_url"
+                    [workouts]="userData.workout_count"
+                    [membershipDays]="userData.membership_days_remaining"
+                    [assignedClients]="userData.client_count"
+                    [isResponsible]="true">
+                </app-admin-profile>
+            </ng-container>
+        </div>
+    </div>
+</body>

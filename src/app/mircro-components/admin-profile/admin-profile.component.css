@@ -8,6 +8,12 @@ html, body {
 .container{
     display: flex;
     height: 100vh;
+    
+}
+
+.container2{
+    display: flex;
+
 }
 
 .content{
@@ -25,7 +31,7 @@ html, body {
     margin-bottom: 30px;
 }
 
-.clients{
+.profile{
     background-color: #ffffff; /* Cambia el color a un gris claro */
     padding: 10px; /* Agrega algo de padding para mejor visibilidad */
     border-radius: 10px; /* Opcional: bordes redondeados */
@@ -60,41 +66,45 @@ html, body {
     font-family: Arial, sans-serif;
     font-size: 20px;
 }
+.blackLabel {
+    color: #000000;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
 
-.search-wrapper {
-    position: relative;
-    width: 100%;
+.pfp{
+    flex: 1;
+}
+.pfp img{
+    width: 100px;
+    height: 100px;
+}
+
+.info{
+    flex: 9;
+}
+
+.stats-group {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 10px; /* Espacio entre las labels */
 }
 
-.search-input {
+.label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+}
+
+.blackLabel {
+    color: #000000;
+    font-family: Arial, sans-serif;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
     width: 100%;
-    padding: 12px 20px;
-    border: 1px solid #7F8084;
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: white;
-    padding-right: 40px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #1680EA;
-    box-shadow: 0 0 5px rgba(22, 128, 234, 0.2);
-}
-
-.search-input::placeholder {
-    color: #999;
-}
-
-.search-icon {
-    position: absolute;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-    pointer-events: none;
+    padding: 20px 0;
 }
