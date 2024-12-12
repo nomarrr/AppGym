@@ -1,0 +1,34 @@
+<div class="container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="content">
+        <h1>Aumentar Membresía</h1>
+        <div class="form-container">
+            <div class="memberships-section">
+                <h2>Seleccionar Membresía</h2>
+                <div class="memberships-grid">
+                    <div *ngFor="let membership of memberships" 
+                         class="membership-card"
+                         [class.selected]="selectedMembership === membership.id"
+                         (click)="selectMembership(membership.id)">
+                        <h3>{{membership.membership_name}}</h3>
+                        <p>Precio: ${{membership.price}}</p>
+                        <p>Días: {{membership.days}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <app-btn 
+                    buttonText="Guardar" 
+                    [buttonWidth]="'150px'"
+                    (buttonClick)="saveMembershipPayment()">
+                </app-btn>
+                <app-btn 
+                    buttonText="Cancelar" 
+                    [buttonWidth]="'150px'"
+                    (buttonClick)="cancel()">
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</div>

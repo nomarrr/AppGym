@@ -36,6 +36,13 @@ import { AdminViewProfileComponent } from './pages/admin-view-profile/admin-view
 import { ViewCoachRoutinesComponent } from './pages/view-coach-routines/view-coach-routines.component';
 import { ExerciseCard3Component } from './mircro-components/exercise-card3/exercise-card3.component';
 import { ViewRoutineComponent } from './pages/view-routine/view-routine.component';
+import { AdminClientList2Component } from './mircro-components/admin-client-list2/admin-client-list2.component';
+import { ClientsComponent } from './pages/clients/clients.component';
+import { MembershipCardComponent } from './mircro-components/membership-card/membership-card.component';
+import { MembershipsListComponent } from './pages/memberships-list/memberships-list.component';
+import { EditMembershipComponent } from './pages/edit-membership/edit-membership.component';
+import { AddMembershipComponent } from './pages/add-membership/add-membership.component';
+import { AddMembershipUserComponent } from './pages/add-membership-user/add-membership-user.component';
 
 export const routes: Routes = [
   { 
@@ -99,12 +106,20 @@ export const routes: Routes = [
     component: SelectExerciseComponent
   },
   {
+    path: 'membership-card',
+    component: MembershipCardComponent
+  },
+  {
     path:'admin-client-list',
     component: AdminClientListComponent
   },
   {
     path: 'general-volume',
     component: GeneralVolumeComponent
+  },
+  {
+    path: 'admin-client-list2',
+    component: AdminClientList2Component
   },
   {
     path: 'exercise-card3',
@@ -215,6 +230,36 @@ export const routes: Routes = [
   {
     path: 'view-routine/:id',
     component: ViewRoutineComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'clients',
+    component: ClientsComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'memberships',
+    component: MembershipsListComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'edit-membership/:id',
+    component: EditMembershipComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'add-membership',
+    component: AddMembershipComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'add-membership-user/:id',
+    component: AddMembershipUserComponent,
     canActivate: [authGuard],
     canActivateChild: [() => roleGuard([UserRole.ADMIN])]
   },

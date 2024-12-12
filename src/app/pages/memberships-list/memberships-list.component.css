@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content h1 {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.memberships {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 99%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.labels-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.blueLabel {
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}

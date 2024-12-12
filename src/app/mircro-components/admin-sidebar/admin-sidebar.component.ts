@@ -22,10 +22,10 @@ export class AdminSidebarComponent {
         this.router.navigate(['/admin-dashboard']);
         break;
       case 'Clientes':
-        this.router.navigate(['/admin-dashboard']);
+        this.router.navigate(['/clients']);
         break;
       case 'Membresias':
-        this.router.navigate(['/admin-dashboard']);
+        this.router.navigate(['/memberships']);
         break;
       case 'Estadisticas':
         this.router.navigate(['/admin-dashboard']);

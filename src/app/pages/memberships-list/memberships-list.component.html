@@ -1,0 +1,21 @@
+<div class="container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="content">
+        <h1>Membresías</h1>
+        <div class="memberships">
+            <app-membership-card 
+                *ngFor="let membership of memberships"
+                [membershipName]="membership.membership_name"
+                [membershipId]="membership.id"
+                [price]="membership.price">
+            </app-membership-card>
+            
+            <div class="info-row">
+                <div class="labels-group">
+
+                </div>
+                <app-btn buttonText="Agregar Membresía" (click)="addMembership()"></app-btn>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+.routine {
+    display: flex;
+    border: 1px solid #7F8084;
+    border-radius: 10px;
+    background-color: #ffffff;
+    align-items: center; /* Centra verticalmente */
+    justify-content: space-between; /* Distribuye el espacio entre el label y el botón */
+    padding: 5px 10px; /* Añade espacio adicional solo a los lados */
+}
+
+.routine label {
+    flex-grow: 1;
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.price {
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.routine app-btn {
+    flex-shrink: 0;
+    min-width: 80px; /* Ajusta el tamaño mínimo */
+}
+
+.routine app-btn + app-btn {
+    margin-left: 10px; /* Añade espacio entre los botones */
+}

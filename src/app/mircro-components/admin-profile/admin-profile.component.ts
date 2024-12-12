@@ -1,9 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { BtnComponent } from '../btn/btn.component';
 import { GreyBtnComponent } from '../grey-btn/grey-btn.component';
 import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+
+interface RevokeResponse {
+  message: string;
+}
 
 @Component({
   selector: 'app-admin-profile',
@@ -12,7 +18,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './admin-profile.component.html',
   styleUrl: './admin-profile.component.css'
 })
-export class AdminProfileComponent {
+export class AdminProfileComponent implements OnInit {
   @Input() imgSrc: string = 'img/User.png';
   @Input() clientName: string = '';
   @Input() clientBio: string = '';
@@ -25,8 +31,24 @@ export class AdminProfileComponent {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
+
+  ngOnInit() {
+    console.log('=== DEBUG - AdminProfileComponent Inputs ===');
+    console.log({
+      clientName: this.clientName,
+      clientBio: this.clientBio,
+      option: this.option,
+      membershipDays: this.membershipDays
+    });
+  }
+
+  increaseMembership() {
+    console.log('Navegando a add-membership-user con ID:', this.clientId);
+    this.router.navigate(['/add-membership-user', this.clientId]);
+  }
 
   demoteCoach() {
     if (confirm('¿Estás seguro de que deseas deshabilitar a este coach?')) {
@@ -48,4 +70,19 @@ export class AdminProfileComponent {
       state: { coachName: this.clientName }
     });
   }
+
+  revokeMembership() {
+    if (confirm('¿Estás seguro de que deseas deshabilitar esta membresía?')) {
+      this.userService.revokeMembership(this.clientId).subscribe({
+        next: (response) => {
+          console.log('Membresía deshabilitada exitosamente');
+          this.location.back();
+        },
+        error: (error) => {
+          console.error('Error al deshabilitar membresía:', error);
+        }
+      });
+    }
+  }
+
 }

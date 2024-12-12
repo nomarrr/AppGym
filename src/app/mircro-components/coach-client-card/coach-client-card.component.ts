@@ -22,7 +22,11 @@ export class CoachClientCardComponent {
   ) {}
 
   viewClient() {
-    this.router.navigate(['/admin-view-profile', this.clientId]);
+    this.router.navigate(['/admin-view-profile', this.clientId], {
+      state: { 
+        option: 1
+      }
+    });
   }
 
   promoteToCoach() {

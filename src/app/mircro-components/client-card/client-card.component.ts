@@ -13,17 +13,15 @@ export class ClientCardComponent {
   @Input() clientName: string = '';
   @Input() clientId: number = 0;
   @Input() imageUrl: string = '';
-  @Input() option: number = 1; // 1: Cliente normal, 2: Coach
+  @Input() option: number = 1;
 
   constructor(private router: Router) {}
 
   viewClient() {
-    if (this.option === 2) {
-      // Si es coach, navega al perfil de admin
-      this.router.navigate(['/admin-view-profile', this.clientId]);
-    } else {
-      // Si es cliente, navega al perfil de cliente
-      this.router.navigate(['/admin-view-profile', this.clientId]);
-    }
+    this.router.navigate(['/admin-view-profile', this.clientId], {
+      state: { 
+        option: this.option
+      }
+    });
   }
 }

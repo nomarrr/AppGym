@@ -1,0 +1,19 @@
+<div class="clients">
+    <div class="search-wrapper">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearch()"
+            placeholder="Buscar"
+            class="search-input">
+        <img src="/img/Search.png" alt="search" class="search-icon">
+    </div>
+
+    <app-client-card 
+        *ngFor="let user of filteredUsers"
+        [clientName]="user.name"
+        [clientId]="user.id"
+        [imageUrl]="user.image_url"
+        [option]="3">
+    </app-client-card>
+</div>

@@ -2,19 +2,16 @@
     <div class="container">
         <app-admin-sidebar></app-admin-sidebar>
         <div class="content">
-            <ng-container *ngIf="userData">
-                <app-admin-profile
-                    [option]="option"
-                    [clientId]="userId"
-                    [clientName]="userData.name"
-                    [clientBio]="userData.bio"
-                    [imgSrc]="userData.image_url"
-                    [workouts]="userData.workout_count"
-                    [membershipDays]="userData.membership_days_remaining"
-                    [assignedClients]="userData.client_count"
-                    [isResponsible]="true">
-                </app-admin-profile>
-            </ng-container>
+            <app-admin-profile
+                [clientId]="clientId"
+                [option]="option"
+                [clientName]="clientName"
+                [imgSrc]="imageUrl"
+                [clientBio]="clientBio"
+                [workouts]="workouts"
+                [membershipDays]="membershipDays"
+                [assignedClients]="assignedClients">
+            </app-admin-profile>
         </div>
     </div>
 </body>

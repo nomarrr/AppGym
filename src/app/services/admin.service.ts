@@ -16,6 +16,14 @@ interface User {
   image_url: string;
 }
 
+interface Membership {
+  id: number;
+  membership_name: string;
+  price: number;
+  days: number;
+  active: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -71,5 +79,54 @@ export class AdminService {
     const headers = this.getHeaders();
     return this.http.get<User[]>(`${this.apiUrl}/get_users/`, { headers })
       .pipe(catchError(this.handleError));
+  }
+
+  getMemberships(): Observable<Membership[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Membership[]>(`${this.apiUrl}/memberships`, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  getMembershipById(id: number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(
+        `${this.apiUrl}/memberships/${id}`,
+        { headers }
+    ).pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  updateMembership(id: number, membership: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.put(
+        `${this.apiUrl}/memberships/${id}`, 
+        membership, 
+        { headers }
+    ).pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  createMembership(membership: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(
+        `${this.apiUrl}/memberships`, 
+        membership, 
+        { headers }
+    ).pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  registerMembershipPayment(userId: number, membershipId: number, paymentData: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(
+        `${this.apiUrl}/users/${userId}/memberships/${membershipId}`,
+        paymentData,
+        { headers }
+    ).pipe(
+        catchError(this.handleError)
+    );
   }
 } 

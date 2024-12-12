@@ -1,0 +1,59 @@
+<div class="container">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="content">
+        <h1>Agregar Membresía</h1>
+        <div class="form-container">
+            <div class="input-group">
+                <label>Nombre de la Membresía</label>
+                <app-auth-input-field
+                    [placeholder]="'Nombre de la membresía'"
+                    [type]="'text'"
+                    [inputId]="'membership-name'"
+                    (valueChange)="onNameChange($event)">
+                </app-auth-input-field>
+            </div>
+
+            <div class="input-group">
+                <label>Precio</label>
+                <app-auth-input-field
+                    [placeholder]="'Precio'"
+                    [type]="'number'"
+                    [inputId]="'price'"
+                    (valueChange)="onPriceChange($event)">
+                </app-auth-input-field>
+            </div>
+
+            <div class="input-group">
+                <label>Días</label>
+                <app-auth-input-field
+                    [placeholder]="'Días'"
+                    [type]="'number'"
+                    [inputId]="'days'"
+                    (valueChange)="onDaysChange($event)">
+                </app-auth-input-field>
+            </div>
+
+            <div class="checkbox-group">
+                <input 
+                    type="checkbox" 
+                    id="active" 
+                    [checked]="active"
+                    (change)="onActiveChange($event)">
+                <label for="active">Membresía Activa</label>
+            </div>
+
+            <div class="buttons-container">
+                <app-btn 
+                    buttonText="Guardar" 
+                    [buttonWidth]="'150px'"
+                    (buttonClick)="saveMembership()">
+                </app-btn>
+                <app-btn 
+                    buttonText="Cancelar" 
+                    [buttonWidth]="'150px'"
+                    (buttonClick)="cancel()">
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</div>

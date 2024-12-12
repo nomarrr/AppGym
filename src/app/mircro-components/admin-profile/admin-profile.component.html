@@ -43,8 +43,15 @@
             <label class="blackLabel">{{membershipDays}}</label>
         </div>
         <div class="buttons">
-            <app-btn buttonText="Aumentar membresia"></app-btn>
-            <app-btn buttonText="Deshabilitar membresia"></app-btn>
+            <app-btn 
+                buttonText="Aumentar Membresía" 
+                [buttonWidth]="'200px'"
+                (buttonClick)="increaseMembership()">
+            </app-btn>
+            <app-btn 
+                buttonText="Deshabilitar membresia" 
+                (buttonClick)="revokeMembership()">
+            </app-btn>
         </div>
     </div>
 </div>

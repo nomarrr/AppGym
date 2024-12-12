@@ -11,6 +11,7 @@ export class AuthInputFieldComponent {
   @Input() placeholder: string = '';
   @Input() type: string = 'text';
   @Input() inputId: string = '';
+  @Input() value: string = '';
 
   @Output() valueChange = new EventEmitter<string>();
 
