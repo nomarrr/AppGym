@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -8,15 +9,38 @@ import { Router } from '@angular/router';
   templateUrl: './admin-sidebar.component.html',
   styleUrl: './admin-sidebar.component.css'
 })
-export class AdminSidebarComponent {
+export class AdminSidebarComponent implements OnInit {
   activeItem: string = '';
 
   constructor(private router: Router) {}
 
+  ngOnInit() {
+    // Suscribirse a los cambios de ruta
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateActiveItem(this.router.url);
+    });
+
+    // Establecer el item activo inicial
+    this.updateActiveItem(this.router.url);
+  }
+
+  updateActiveItem(url: string) {
+    if (url.includes('admin-dashboard')) {
+      this.activeItem = 'Coaches';
+    } else if (url.includes('clients')) {
+      this.activeItem = 'Clientes';
+    } else if (url.includes('memberships')) {
+      this.activeItem = 'Membresias';
+    } else if (url.includes('membership-stats')) {
+      this.activeItem = 'Estadisticas';
+    }
+  }
+
   setActiveItem(itemId: string) {
     this.activeItem = itemId;
     
-    // Manejar la navegación según el ítem seleccionado
     switch(itemId) {
       case 'Coaches':
         this.router.navigate(['/admin-dashboard']);
@@ -28,7 +52,7 @@ export class AdminSidebarComponent {
         this.router.navigate(['/memberships']);
         break;
       case 'Estadisticas':
-        this.router.navigate(['/admin-dashboard']);
+        this.router.navigate(['/membership-stats']);
         break;
       case 'logout':
         this.logout();
@@ -37,7 +61,7 @@ export class AdminSidebarComponent {
   }
 
   logout() {
-    localStorage.removeItem('access_token');  // Elimina el token
-    this.router.navigate(['/login']);  // Redirige al login
+    localStorage.removeItem('access_token');
+    this.router.navigate(['/login']);
   }
 }

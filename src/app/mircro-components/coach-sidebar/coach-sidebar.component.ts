@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-coach-sidebar',
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './coach-sidebar.component.html',
   styleUrl: './coach-sidebar.component.css'
 })
-export class CoachSidebarComponent {
+export class CoachSidebarComponent implements OnInit {
   activeItem: string = '';
 
   constructor(
@@ -17,10 +18,33 @@ export class CoachSidebarComponent {
     private authService: AuthService
   ) {}
 
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateActiveItem(this.router.url);
+    });
+
+    this.updateActiveItem(this.router.url);
+  }
+
+  updateActiveItem(url: string) {
+    if (url.includes('coach-dashboard')) {
+      this.activeItem = 'clientes';
+    } else if (url.includes('exercise-panel')) {
+      this.activeItem = 'ejercicios';
+    } else if (url.includes('coach-routines')) {
+      this.activeItem = 'rutinas';
+    } else if (url.includes('recipes')) {
+      this.activeItem = 'recetas';
+    } else if (url.includes('profile')) {
+      this.activeItem = 'perfil';
+    }
+  }
+
   setActiveItem(itemId: string) {
     this.activeItem = itemId;
     
-    // Manejar la navegación según el ítem seleccionado
     switch(itemId) {
       case 'clientes':
         this.router.navigate(['/coach-dashboard']);

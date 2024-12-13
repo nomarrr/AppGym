@@ -1,0 +1,8 @@
+<div>
+    <app-stats-card 
+        *ngFor="let stat of stats" 
+        [statName]="stat"
+        type="membership"
+        (cardClick)="onStatSelected($event)">
+    </app-stats-card>
+</div> 

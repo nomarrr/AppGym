@@ -1,0 +1,10 @@
+div {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 99%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} 

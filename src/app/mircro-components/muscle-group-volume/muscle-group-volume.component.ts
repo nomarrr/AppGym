@@ -51,10 +51,13 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
     this.statsService.getMuscleGroupVolumeData().subscribe({
       next: (data: MuscleGroupVolumeData) => {
         console.log('Datos recibidos del API:', data);
-        const formattedDates = data.dates.map((date: string) => this.formatDate(date));
+        // Invertir el orden de las fechas y los datos
+        const reversedDates = [...data.dates].reverse();
+        const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
         
         this.muscleGroups = data.muscle_groups.map((group: MuscleGroup) => ({
           ...group,
+          volumes: [...group.volumes].reverse(), // Invertir los volúmenes
           bestVolume: Math.max(...group.volumes)
         }));
 

@@ -51,10 +51,12 @@ export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
     this.statsService.getMuscleGroupSetsData().subscribe({
       next: (data: MuscleGroupSetsData) => {
         console.log('Datos recibidos del API:', data);
-        const formattedDates = data.dates.map((date: string) => this.formatDate(date));
+        const reversedDates = [...data.dates].reverse();
+        const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
         
         this.muscleGroups = data.muscle_groups.map((group: MuscleGroup) => ({
           ...group,
+          sets: [...group.sets].reverse(),
           bestSets: Math.max(...group.sets)
         }));
 

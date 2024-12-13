@@ -43,6 +43,7 @@ import { MembershipsListComponent } from './pages/memberships-list/memberships-l
 import { EditMembershipComponent } from './pages/edit-membership/edit-membership.component';
 import { AddMembershipComponent } from './pages/add-membership/add-membership.component';
 import { AddMembershipUserComponent } from './pages/add-membership-user/add-membership-user.component';
+import { MembershipStatsComponent } from './pages/membership-stats/membership-stats.component';
 
 export const routes: Routes = [
   { 
@@ -230,6 +231,12 @@ export const routes: Routes = [
   {
     path: 'view-routine/:id',
     component: ViewRoutineComponent,
+    canActivate: [authGuard],
+    canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'membership-stats',
+    component: MembershipStatsComponent,
     canActivate: [authGuard],
     canActivateChild: [() => roleGuard([UserRole.ADMIN])]
   },

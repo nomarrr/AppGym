@@ -12,6 +12,7 @@ import { StatsStateService } from '../../services/stats-state.service';
 })
 export class StatsCardComponent {
   @Input() statName: string = 'Volumen general';
+  @Input() type: 'client' | 'membership' = 'client';
   @Output() cardClick = new EventEmitter<string>();
 
   constructor(
@@ -21,6 +22,9 @@ export class StatsCardComponent {
 
   onCardClick() {
     this.statsStateService.setSelectedStat(this.statName);
-    this.router.navigate(['/stats']);
+    if (this.type === 'client') {
+      this.router.navigate(['/stats']);
+    }
+    this.cardClick.emit(this.statName);
   }
 }

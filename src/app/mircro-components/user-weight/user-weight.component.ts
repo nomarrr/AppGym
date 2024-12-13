@@ -38,8 +38,10 @@ export class UserWeightComponent implements OnInit, OnDestroy {
     this.statsService.getUserWeights().subscribe({
       next: (data) => {
         console.log('Datos recibidos del API:', data);
-        const formattedDates = data.dates.map((date: string) => this.formatDate(date));
-        this.createChart(formattedDates, data.weights);
+        const reversedDates = [...data.dates].reverse();
+        const reversedWeights = [...data.weights].reverse();
+        const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
+        this.createChart(formattedDates, reversedWeights);
       },
       error: (error) => {
         console.error('Error cargando datos:', error);

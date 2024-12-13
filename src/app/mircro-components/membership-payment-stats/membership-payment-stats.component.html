@@ -1,0 +1,18 @@
+<div>
+    <div class="header">
+        <button class="back-button" (click)="goBack()">← Volver</button>
+        <h3>Pagos Presenciales</h3>
+    </div>
+    <div class="period-selector">
+        <button [class.active]="selectedPeriod === 'week'" (click)="changePeriod('week')">Semana</button>
+        <button [class.active]="selectedPeriod === 'month'" (click)="changePeriod('month')">Mes</button>
+        <button [class.active]="selectedPeriod === 'year'" (click)="changePeriod('year')">Año</button>
+    </div>
+    <div class="chart-container">
+        <canvas id="paymentChart"></canvas>
+    </div>
+    <div class="total-payments">
+        <span class="label">Total del período</span>
+        <span class="value">${{totalPayments}}</span>
+    </div>
+</div> 
