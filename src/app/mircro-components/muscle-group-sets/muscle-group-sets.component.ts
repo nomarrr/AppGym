@@ -41,24 +41,27 @@ export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
   }
 
   formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('es', { month: 'short' });
-    return `${day} ${month}`;
+    const [year, month, day] = dateString.split('-').map(Number);
+    return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
   }
 
   loadMuscleGroupData() {
     this.statsService.getMuscleGroupSetsData().subscribe({
       next: (data: MuscleGroupSetsData) => {
         console.log('Datos recibidos del API:', data);
+        
+        // Invertir el orden de las fechas y datos
         const reversedDates = [...data.dates].reverse();
         const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
         
-        this.muscleGroups = data.muscle_groups.map((group: MuscleGroup) => ({
-          ...group,
-          sets: [...group.sets].reverse(),
-          bestSets: Math.max(...group.sets)
-        }));
+        this.muscleGroups = data.muscle_groups.map((group: MuscleGroup) => {
+          const reversedSets = [...group.sets].reverse();
+          return {
+            ...group,
+            sets: reversedSets,
+            bestSets: Math.max(...group.sets)
+          };
+        });
 
         const datasets = this.muscleGroups.map(group => ({
           label: group.name,

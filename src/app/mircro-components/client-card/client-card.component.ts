@@ -14,14 +14,24 @@ export class ClientCardComponent {
   @Input() clientId: number = 0;
   @Input() imageUrl: string = '';
   @Input() option: number = 1;
+  @Input() viewType: 'admin' | 'coach' | 'default' = 'default';
 
   constructor(private router: Router) {}
 
   viewClient() {
-    this.router.navigate(['/admin-view-profile', this.clientId], {
-      state: { 
-        option: this.option
-      }
-    });
+    switch(this.viewType) {
+      case 'coach':
+        this.router.navigate(['/coach-view-client', this.clientId]);
+        break;
+      case 'admin':
+        this.router.navigate(['/admin-view-profile', this.clientId], {
+          state: { option: this.option }
+        });
+        break;
+      default:
+        this.router.navigate(['/admin-view-profile', this.clientId], {
+          state: { option: this.option }
+        });
+    }
   }
 }

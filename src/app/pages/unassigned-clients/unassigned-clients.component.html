@@ -18,7 +18,8 @@
                     *ngFor="let client of filteredClients"
                     [clientName]="client.name"
                     [clientId]="client.id"
-                    [imageUrl]="client.image_url">
+                    [imageUrl]="client.image_url"
+                    viewType="coach">
                 </app-client-card>
             </div>
         </div>

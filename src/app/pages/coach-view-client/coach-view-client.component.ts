@@ -6,6 +6,15 @@ import { GreyBtnComponent } from '../../mircro-components/grey-btn/grey-btn.comp
 import { BtnComponent } from '../../mircro-components/btn/btn.component';
 import { CoachService } from '../../services/coach.service';
 
+interface ClientDetail {
+  id: number;
+  name: string;
+  bio: string;
+  workouts: number;
+  image_url: string;
+  is_responsible: boolean;
+}
+
 @Component({
   selector: 'app-coach-view-client',
   standalone: true,
@@ -38,8 +47,9 @@ export class CoachViewClientComponent implements OnInit {
 
   private loadClientDetail(clientId: number) {
     this.coachService.getClientDetail(clientId).subscribe({
-      next: (client) => {
-        this.imgSrc = client.image_url;
+      next: (client: ClientDetail) => {
+        console.log('Detalles del cliente recibidos:', client);
+        this.imgSrc = client.image_url || 'img/User.png';
         this.clientName = client.name;
         this.clientBio = client.bio;
         this.workouts = client.workouts;
@@ -47,6 +57,14 @@ export class CoachViewClientComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando detalles del cliente:', error);
+        // Manejar el error según los códigos de estado
+        if (error.status === 403) {
+          console.error('No tienes permisos para ver este cliente');
+          this.router.navigate(['/coach-dashboard']);
+        } else if (error.status === 404) {
+          console.error('Cliente no encontrado');
+          this.router.navigate(['/coach-dashboard']);
+        }
       }
     });
   }
@@ -55,11 +73,11 @@ export class CoachViewClientComponent implements OnInit {
     this.coachService.assignClient(this.clientId).subscribe({
       next: (response) => {
         console.log('Cliente asignado exitosamente:', response);
-        this.router.navigate(['/coach-dashboard']);
+        // Recargar los detalles del cliente para actualizar is_responsible
+        this.loadClientDetail(this.clientId);
       },
       error: (error) => {
         console.error('Error al asignar cliente:', error);
-        // Aquí podrías agregar un manejo de errores más específico
       }
     });
   }
@@ -68,5 +86,10 @@ export class CoachViewClientComponent implements OnInit {
     this.router.navigate(['/client-routines', this.clientId], {
       state: { clientName: this.clientName }
     });
+  }
+
+  verEstadisticas() {
+    // Implementar la navegación a las estadísticas cuando esté disponible
+    console.log('Ver estadísticas del cliente:', this.clientId);
   }
 }

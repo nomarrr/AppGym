@@ -5,6 +5,11 @@ import { StatsService } from '../../services/stats.service';
 
 Chart.register(...registerables);
 
+interface WeightData {
+  dates: string[];
+  weights: number[];
+}
+
 @Component({
   selector: 'app-user-weight',
   standalone: true,
@@ -28,19 +33,20 @@ export class UserWeightComponent implements OnInit, OnDestroy {
   }
 
   formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('es', { month: 'short' });
-    return `${day} ${month}`;
+    const [year, month, day] = dateString.split('-').map(Number);
+    return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
   }
 
   loadWeightData() {
     this.statsService.getUserWeights().subscribe({
-      next: (data) => {
+      next: (data: WeightData) => {
         console.log('Datos recibidos del API:', data);
+        
+        // Invertir el orden de las fechas y pesos
         const reversedDates = [...data.dates].reverse();
         const reversedWeights = [...data.weights].reverse();
         const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
+        
         this.createChart(formattedDates, reversedWeights);
       },
       error: (error) => {
