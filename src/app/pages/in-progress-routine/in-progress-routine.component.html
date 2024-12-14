@@ -1,0 +1,26 @@
+<!-- src/app/pages/in-progress-routine/in-progress-routine.component.html -->
+<body>
+    <div class="container" *ngIf="activeWorkout$ | async as workout">
+        <app-sidebar></app-sidebar>
+        <div class="content">
+            <app-routine-header 
+                [startTime]="workout.startTime" 
+                [volumen]="workout.totalVolume"
+                [series]="workout.completedSets"
+                [allSetsCompleted]="allSetsCompleted"
+                (finishWorkout)="onFinishWorkout($event)">
+            </app-routine-header>
+            
+            <app-exercise-card 
+                *ngFor="let exercise of workout.exercises"
+                [exerciseId]="exercise.id"
+                [imageUrl]="exercise.imageUrl"
+                [exerciseName]="exercise.name"
+                [numberOfSets]="exercise.sets.length"
+                [savedSets]="exercise.sets"
+                (volumenTotalChange)="onVolumenChange($event)"
+                (setCompleted)="onSetCompleted($event)">
+            </app-exercise-card>
+        </div>
+    </div>
+</body>

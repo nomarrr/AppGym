@@ -1,11 +1,19 @@
+<!-- src/app/pages/my-routines/my-routines.component.html -->
 <body>
     <div class="container">
-        <app-sidebar></app-sidebar>
-        <div class="content">
-            <h1>Mis rutinas</h1>
-            <app-routine-list></app-routine-list>
-            <h1>Mis entrenamientos</h1>
-            <app-workout-list [userId]="userId"></app-workout-list>
-        </div>
+      <app-sidebar></app-sidebar>
+      <div class="content">
+        <h1>Mis rutinas</h1>
+        <app-routine-list></app-routine-list>
+        <div *ngIf="inProgressRoutineName">
+            <app-in-progress-routine-card 
+              [routineName]="inProgressRoutineName"
+              (resume)="onResumeRoutine()"
+              (discard)="onDiscardRoutine()">
+            </app-in-progress-routine-card>
+          </div>
+        <h1>Mis entrenamientos</h1>
+        <app-workout-list [userId]="userId"></app-workout-list>
+      </div>
     </div>
-</body>
+  </body>

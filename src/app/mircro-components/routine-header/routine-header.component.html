@@ -1,3 +1,4 @@
+<!-- src/app/mircro-components/routine-header/routine-header.component.html -->
 <div class="header-container">
     <div class="stat-group">
         <span class="label">Duracion</span>
@@ -20,6 +21,7 @@
         buttonWidth="10%" 
         buttonFontSize="16px" 
         type="button"
+        [disabled]="!allSetsCompleted"
         (click)="onFinishClick()">
     </app-btn>
 </div>

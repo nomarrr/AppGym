@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Input } from '@angular/core';
+// src/app/mircro-components/routine-header/routine-header.component.ts
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { BtnComponent } from '../btn/btn.component';
 
 @Component({
@@ -10,13 +10,14 @@ import { BtnComponent } from '../btn/btn.component';
   styleUrl: './routine-header.component.css'
 })
 export class RoutineHeaderComponent implements OnInit, OnDestroy {
-  tiempo: number = 0;
-  tiempoFormateado: string = '0s';
-  cronometroActivo: boolean = false;
-  intervalId: any;
+  @Input() startTime: number = 0;
   @Input() volumen: number = 0;
   @Input() series: number = 0;
+  @Input() allSetsCompleted: boolean = false;
   @Output() finishWorkout = new EventEmitter<string>();
+
+  tiempoFormateado: string = '0s';
+  intervalId: any;
 
   ngOnInit() {
     this.iniciarCronometro();
@@ -27,30 +28,22 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
   }
 
   iniciarCronometro() {
-    if (!this.cronometroActivo) {
-      this.cronometroActivo = true;
-      this.intervalId = setInterval(() => {
-        this.tiempo++;
-        this.tiempoFormateado = this.obtenerTiempoFormateado();
-      }, 1000);
-    }
+    this.intervalId = setInterval(() => {
+      const now = Date.now();
+      const elapsed = now - this.startTime;
+      this.tiempoFormateado = this.obtenerTiempoFormateado(elapsed);
+    }, 1000);
   }
 
   pausarCronometro() {
-    this.cronometroActivo = false;
     clearInterval(this.intervalId);
   }
 
-  reiniciarCronometro() {
-    this.pausarCronometro();
-    this.tiempo = 0;
-  }
-
-  // Método actualizado para formatear el tiempo en formato hh:mm:ss
-  obtenerTiempoFormateado(): string {
-    const horas = Math.floor(this.tiempo / 3600);
-    const minutos = Math.floor((this.tiempo % 3600) / 60);
-    const segundos = this.tiempo % 60;
+  obtenerTiempoFormateado(ms: number): string {
+    const totalSeconds = Math.floor(ms / 1000);
+    const horas = Math.floor(totalSeconds / 3600);
+    const minutos = Math.floor((totalSeconds % 3600) / 60);
+    const segundos = totalSeconds % 60;
     
     let tiempoFormateado = '';
     
@@ -68,7 +61,12 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
   }
 
   onFinishClick() {
-    this.pausarCronometro();
-    this.finishWorkout.emit(this.tiempoFormateado);
+    if (this.allSetsCompleted) {
+      this.pausarCronometro();
+      this.finishWorkout.emit(this.tiempoFormateado);
+    } else {
+      alert('Debes completar todos los sets antes de terminar la rutina.');
+    }
+    //console.log('Evento boton terminar emitido');
   }
 }

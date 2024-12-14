@@ -6,7 +6,6 @@ import { CoachDashboardComponent } from './pages/coach-dashboard/coach-dashboard
 import { LoginComponent } from './pages/login/login.component';
 import { MyRoutinesComponent } from './pages/my-routines/my-routines.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
-import { RoutineComponent } from './pages/routine/routine.component';
 import { ExerciseCard2Component } from './mircro-components/exercise-card2/exercise-card2.component';
 import { ExercisesComponent } from './mircro-components/exercises/exercises.component';
 import { ExercisePanelComponent } from './pages/exercise-panel/exercise-panel.component';
@@ -47,6 +46,7 @@ import { MembershipStatsComponent } from './pages/membership-stats/membership-st
 import { ViewWorkoutComponent } from './pages/view-workout/view-workout.component';
 import { ClientViewWorkoutComponent } from './pages/client-view-workout/client-view-workout.component';
 import { WorkoutListComponent } from './mircro-components/workout-list/workout-list.component';
+import { InProgressRoutineComponent } from './pages/in-progress-routine/in-progress-routine.component';
 
 export const routes: Routes = [
   { 
@@ -71,17 +71,17 @@ export const routes: Routes = [
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
   },
+  {
+    path: 'in-progress-routine',
+    component: InProgressRoutineComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
+  },
   { 
     path: 'coach-dashboard', 
     component: CoachDashboardComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
-  },
-  { 
-    path: 'routine/:id', 
-    component: RoutineComponent,
-    canActivate: [authGuard],
-    canMatch: [roleGuard([UserRole.CLIENT])]
   },
   {
     path: 'exercise-card2',
