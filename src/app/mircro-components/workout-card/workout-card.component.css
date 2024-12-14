@@ -1,0 +1,34 @@
+.routine {
+    display: flex;
+    border: 1px solid #7F8084;
+    border-radius: 10px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.routine label {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.date {
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.routine app-btn {
+    flex-shrink: 0;
+    min-width: 80px;
+}

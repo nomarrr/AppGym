@@ -89,7 +89,7 @@ export class RoutineComponent implements OnInit {
     console.log('Nuevo volumen total:', this.totalVolume);
   }
 
-  onFinishWorkout() {
+  onFinishWorkout(duration: string) {
     const currentDate = new Date().toISOString();
     const userId = parseInt(localStorage.getItem('userId') || '0');
 
@@ -98,7 +98,8 @@ export class RoutineComponent implements OnInit {
         name: `Workout ${currentDate}`,
         user_id: userId,
         routine_id: this.routineId,
-        date: currentDate
+        date: currentDate,
+        duration: duration
       },
       workout_exercises: this.exercises.map((exercise) => {
         const exerciseData = this.exercisesData[exercise.id] || {

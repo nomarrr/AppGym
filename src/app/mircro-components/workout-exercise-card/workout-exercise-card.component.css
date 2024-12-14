@@ -1,0 +1,112 @@
+:host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.exercise-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.exercise-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+}
+
+.exercise-header img {
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.exercise-header label {
+    color: #1680EA;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+
+.table-container {
+    width: 100%;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+th {
+    background-color: #ffffff;
+    color: #7F8084;
+    font-weight: 500;
+    text-align: center;
+    padding: 12px 15px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+}
+
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border: none;
+}
+
+input[type="number"] {
+    width: 90%;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    text-align: center;
+    appearance: textfield;
+    color: #666;
+    cursor: default;
+    
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    -moz-appearance: textfield;
+    
+    &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+}
+
+tr.completed-row {
+    background-color: #C8FFA2;
+}
+
+table {
+  width: 100%;
+  
+  th, td {
+    text-align: center;
+    
+    &:nth-child(1) { width: 10%; }
+    &:nth-child(2) { width: 70%; }
+    &:nth-child(3) { width: 10%; }
+  }
+} 

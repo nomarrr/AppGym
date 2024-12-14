@@ -1,27 +1,38 @@
 html, body {
-    background-color: #F3F3F3; /* Cambia el color al que prefieras */
-    margin: 0; /* Opcional: elimina los márgenes del cuerpo */
-    overflow-x: hidden;
-    padding: 0; /* Opcional: elimina el padding del cuerpo */
-    /*overflow-x: hidden; /* Evita el scroll horizontal */
+    background-color: #F3F3F3;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.container{
+.container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
-.content{
-    flex-grow: 1; /* El contenido principal ocupa el espacio restante */
+.content {
+    flex-grow: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-.content h1{
+.content h1 {
     color: #7F8084;
     font-family: Arial, sans-serif;
     font-size: 24px;
     text-align: center;
     margin-bottom: 30px;
+}
+
+app-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-shrink: 0;
 }

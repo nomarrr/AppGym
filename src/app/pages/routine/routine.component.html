@@ -5,7 +5,7 @@
             <app-routine-header 
                 [volumen]="totalVolume"
                 [series]="completedSets"
-                (finishWorkout)="onFinishWorkout()">
+                (finishWorkout)="onFinishWorkout($event)">
             </app-routine-header>
             
             <app-exercise-card 

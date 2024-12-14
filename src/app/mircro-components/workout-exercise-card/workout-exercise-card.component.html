@@ -1,0 +1,33 @@
+<div class="exercise-container">
+    <div class="exercise-header">
+      <img [src]="imageUrl" alt="Exercise Image" />
+      <label>{{ exerciseName }}</label>
+    </div>
+  
+    <div class="table-container">
+      <form [formGroup]="exerciseForm">
+        <table>
+          <thead>
+            <tr>
+              <th>Serie</th>
+              <th>KG</th>
+              <th>REPS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let serie of series" 
+                [formGroup]="serie.form" 
+                [class.completed-row]="serie.form.controls['completed'].value">
+              <td>{{serie.index}}</td>
+              <td>
+                <input type="number" formControlName="kg" placeholder="KG" readonly />
+              </td>
+              <td>
+                <input type="number" formControlName="reps" placeholder="REPS" readonly />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+</div> 

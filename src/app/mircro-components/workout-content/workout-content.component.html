@@ -1,0 +1,22 @@
+<div class="content">
+    <app-admin-workout-header
+        [totalExercises]="totalExercises"
+        [totalSets]="totalSets"
+        [duration]="workoutDuration"
+        [totalVolume]="workoutVolume"
+        [date]="workoutDate">
+    </app-admin-workout-header>
+
+    <app-admin-routine-name
+        [routineName]="workoutName">
+    </app-admin-routine-name>
+    
+    <app-workout-exercise-card 
+        *ngFor="let exercise of exercises"
+        [exerciseId]="exercise.id"
+        [imageUrl]="exercise.image_url"
+        [exerciseName]="exercise.name"
+        [numberOfSets]="exercise.sets"
+        [exerciseSets]="exercise.exercise_sets">
+    </app-workout-exercise-card>
+</div> 

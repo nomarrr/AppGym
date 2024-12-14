@@ -1,0 +1,18 @@
+<div class="workouts">
+    <div class="search-wrapper">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearch()"
+            placeholder="Buscar"
+            class="search-input">
+        <img src="/img/Search.png" alt="search" class="search-icon">
+    </div>
+
+    <app-workout-card 
+        *ngFor="let workout of filteredWorkouts"
+        [workoutName]="workout.name"
+        [workoutId]="workout.id"
+        [workoutDate]="workout.date">
+    </app-workout-card>
+</div>

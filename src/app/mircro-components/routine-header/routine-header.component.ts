@@ -16,7 +16,7 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
   intervalId: any;
   @Input() volumen: number = 0;
   @Input() series: number = 0;
-  @Output() finishWorkout = new EventEmitter<void>();
+  @Output() finishWorkout = new EventEmitter<string>();
 
   ngOnInit() {
     this.iniciarCronometro();
@@ -69,6 +69,6 @@ export class RoutineHeaderComponent implements OnInit, OnDestroy {
 
   onFinishClick() {
     this.pausarCronometro();
-    this.finishWorkout.emit();
+    this.finishWorkout.emit(this.tiempoFormateado);
   }
 }

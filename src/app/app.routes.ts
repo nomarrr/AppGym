@@ -44,6 +44,9 @@ import { EditMembershipComponent } from './pages/edit-membership/edit-membership
 import { AddMembershipComponent } from './pages/add-membership/add-membership.component';
 import { AddMembershipUserComponent } from './pages/add-membership-user/add-membership-user.component';
 import { MembershipStatsComponent } from './pages/membership-stats/membership-stats.component';
+import { ViewWorkoutComponent } from './pages/view-workout/view-workout.component';
+import { ClientViewWorkoutComponent } from './pages/client-view-workout/client-view-workout.component';
+import { WorkoutListComponent } from './mircro-components/workout-list/workout-list.component';
 
 export const routes: Routes = [
   { 
@@ -59,6 +62,12 @@ export const routes: Routes = [
   { 
     path: 'recipes', 
     component: RecipesComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
+  },
+  {
+    path: 'client-view-workout/:id',
+    component: ClientViewWorkoutComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
   },
@@ -115,6 +124,10 @@ export const routes: Routes = [
     component: AdminClientListComponent
   },
   {
+    path: 'workout-list',
+    component: WorkoutListComponent
+  },
+  {
     path: 'general-volume',
     component: GeneralVolumeComponent
   },
@@ -159,6 +172,10 @@ export const routes: Routes = [
   {
     path: 'select-exercise-card2',
     component: SelectExerciseCard2Component
+  },
+  {
+    path: 'view-workout/:id',
+    component: ViewWorkoutComponent,
   },
   {
     path: 'exercises',
