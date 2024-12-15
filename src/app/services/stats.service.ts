@@ -9,6 +9,35 @@ interface WorkoutVolume {
   total_volume: number;
 }
 
+interface MuscleGroup {
+  id: number;
+  name: string;
+  volumes: number[];
+  bestVolume: number;
+  sets: number[];
+  bestSets?: number;
+}
+
+interface MuscleGroupVolumeData {
+  dates: string[];
+  muscle_groups: MuscleGroup[];
+}
+
+interface MuscleGroupSetsData {
+  dates: string[];
+  muscle_groups: MuscleGroup[];
+}
+
+interface WeightData {
+  date: string;
+  weight: number;
+}
+
+interface MonthlyWeightData {
+  months: string[];
+  average_weights: number[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,20 +54,23 @@ export class StatsService {
     });
   }
 
-  getVolumeData(): Observable<WorkoutVolume[]> {
+  getVolumeData(userId: number, period: 'week' | 'month' | 'year'): Observable<WorkoutVolume[]> {
     const headers = this.getHeaders();
-    return this.http.get<WorkoutVolume[]>(`${this.apiUrl}/workouts/volume`, { headers });
+    return this.http.get<WorkoutVolume[]>(`${this.apiUrl}/workouts/volume/${userId}?period=${period}`, { headers });
   }
 
-  getMuscleGroupVolumeData() {
-    return this.http.get<any>(`${this.apiUrl}/workouts/volume/muscle-groups`, { headers: this.getHeaders() });
+  getMuscleGroupVolumeData(userId: number, period: 'week' | 'month' | 'year'): Observable<MuscleGroupVolumeData> {
+    const headers = this.getHeaders();
+    return this.http.get<MuscleGroupVolumeData>(`${this.apiUrl}/workouts/volume/muscle-groups/${userId}?period=${period}`, { headers });
   }
 
-  getMuscleGroupSetsData() {
-    return this.http.get<any>(`${this.apiUrl}/workouts/sets/muscle-groups`, { headers: this.getHeaders() });
+  getMuscleGroupSetsData(userId: number, period: 'week' | 'month' | 'year'): Observable<MuscleGroupSetsData> {
+    const headers = this.getHeaders();
+    return this.http.get<MuscleGroupSetsData>(`${this.apiUrl}/workouts/sets/muscle-groups/${userId}?period=${period}`, { headers });
   }
 
-  getUserWeights() {
-    return this.http.get<any>(`${this.apiUrl}/user/weights`, { headers: this.getHeaders() });
+  getUserWeights(userId: number, period: 'week' | 'month' | 'year'): Observable<WeightData[] | MonthlyWeightData> {
+    const headers = this.getHeaders();
+    return this.http.get<WeightData[] | MonthlyWeightData>(`${this.apiUrl}/user/weights?user_id=${userId}&period=${period}`, { headers });
   }
 } 

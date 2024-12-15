@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
-
+import { StatsStateService } from '../../services/stats-state.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 Chart.register(...registerables);
 
 @Component({
@@ -15,8 +17,14 @@ Chart.register(...registerables);
 export class GeneralVolumeComponent implements OnInit, OnDestroy {
   chart: any;
   bestVolume: number = 0;
+  selectedPeriod: 'week' | 'month' | 'year' = 'week';
 
-  constructor(private statsService: StatsService) {}
+  constructor(
+    private statsService: StatsService,
+    private statsStateService: StatsStateService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadVolumeData();
@@ -29,23 +37,32 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
   }
 
   formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('es', { month: 'short' });
-    return `${day} ${month}`;
+    if (this.selectedPeriod === 'year') {
+      const [year, month] = dateString.split('-').map(Number);
+      return new Date(year, month - 1).toLocaleString('es', { month: 'short' });
+    } else {
+      const date = new Date(dateString);
+      const day = date.getUTCDate();
+      const month = date.toLocaleString('es', { month: 'short' });
+      return `${day} ${month}`;
+    }
   }
 
   loadVolumeData() {
-    this.statsService.getVolumeData().subscribe({
+    const userId = this.authService.getUserId();
+    
+    if (userId === null) {
+      console.error('No se pudo obtener el ID del usuario logueado.');
+      return;
+    }
+
+    this.statsService.getVolumeData(userId, this.selectedPeriod).subscribe({
       next: (data) => {
         console.log('Datos recibidos del API:', data);
-        console.log('Datos procesados para la gráfica:', {
-          labels: [...data].reverse().map(w => this.formatDate(w.date)),
-          values: [...data].reverse().map(w => w.total_volume)
-        });
-        
-        this.bestVolume = Math.max(...data.map(w => w.total_volume));
+
         const reversedData = [...data].reverse();
+        
+        this.bestVolume = Math.max(...reversedData.map(w => w.total_volume));
         
         const chartData = {
           labels: reversedData.map(w => this.formatDate(w.date)),
@@ -58,6 +75,11 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
         console.error('Error cargando datos:', error);
       }
     });
+  }
+
+  changePeriod(period: 'week' | 'month' | 'year') {
+    this.selectedPeriod = period;
+    this.loadVolumeData();
   }
 
   createChart(data: { labels: string[], values: number[] }) {
@@ -141,5 +163,9 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/client-stats']);
   }
 }

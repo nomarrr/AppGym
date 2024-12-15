@@ -2,12 +2,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
-
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 Chart.register(...registerables);
 
 interface WeightData {
-  dates: string[];
-  weights: number[];
+  date: string;
+  weight: number;
+}
+
+interface MonthlyWeightData {
+  months: string[];
+  average_weights: number[];
 }
 
 @Component({
@@ -19,8 +25,13 @@ interface WeightData {
 })
 export class UserWeightComponent implements OnInit, OnDestroy {
   chart: any;
+  selectedPeriod: 'week' | 'month' | 'year' = 'week';
 
-  constructor(private statsService: StatsService) {}
+  constructor(
+    private statsService: StatsService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadWeightData();
@@ -33,26 +44,53 @@ export class UserWeightComponent implements OnInit, OnDestroy {
   }
 
   formatDate(dateString: string): string {
-    const [year, month, day] = dateString.split('-').map(Number);
-    return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
+    if (this.selectedPeriod === 'year') {
+      const [year, month] = dateString.split('-').map(Number);
+      return new Date(year, month - 1).toLocaleString('es', { month: 'short' });
+    } else {
+      const [year, month, day] = dateString.split('-').map(Number);
+      return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
+    }
   }
 
   loadWeightData() {
-    this.statsService.getUserWeights().subscribe({
-      next: (data: WeightData) => {
-        console.log('Datos recibidos del API:', data);
-        
-        // Invertir el orden de las fechas y pesos
-        const reversedDates = [...data.dates].reverse();
-        const reversedWeights = [...data.weights].reverse();
-        const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
-        
-        this.createChart(formattedDates, reversedWeights);
+    const userId = this.authService.getUserId();
+
+    if (userId === null) {
+      console.error('No se pudo obtener el ID del usuario logueado.');
+      return;
+    }
+
+    this.statsService.getUserWeights(userId, this.selectedPeriod).subscribe({
+      next: (data: WeightData[] | MonthlyWeightData) => {
+        let labels: string[];
+        let weights: number[];
+
+        if (this.selectedPeriod === 'year') {
+          const monthlyData = data as MonthlyWeightData;
+          labels = monthlyData.months.map(month => this.formatDate(month));
+          weights = monthlyData.average_weights;
+        } else {
+          const dailyData = data as WeightData[];
+          labels = dailyData.map(entry => this.formatDate(entry.date));
+          weights = dailyData.map(entry => entry.weight);
+        }
+
+        this.createChart(labels, weights);
       },
       error: (error) => {
         console.error('Error cargando datos:', error);
       }
     });
+  }
+
+  changePeriod(period: 'week' | 'month' | 'year') {
+    this.selectedPeriod = period;
+    this.loadWeightData();
+  }
+
+  goBack() {
+    this.router.navigate(['/client-stats']);
   }
 
   createChart(labels: string[], data: number[]) {

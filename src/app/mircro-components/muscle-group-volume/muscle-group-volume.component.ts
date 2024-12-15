@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
-
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 Chart.register(...registerables);
 
 interface MuscleGroup {
@@ -27,8 +28,13 @@ interface MuscleGroupVolumeData {
 export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
   chart: any;
   muscleGroups: MuscleGroup[] = [];
+  selectedPeriod: 'week' | 'month' | 'year' = 'week';
 
-  constructor(private statsService: StatsService) {}
+  constructor(
+    private statsService: StatsService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadMuscleGroupData();
@@ -41,24 +47,34 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
   }
 
   formatDate(dateString: string): string {
-    const [year, month, day] = dateString.split('-').map(Number);
-    return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
+    if (this.selectedPeriod === 'year') {
+      const [year, month] = dateString.split('-').map(Number);
+      return new Date(year, month - 1).toLocaleString('es', { month: 'short' });
+    } else {
+      const date = new Date(dateString);
+      const day = date.getUTCDate();
+      const month = date.toLocaleString('es', { month: 'short' });
+      return `${day} ${month}`;
+    }
   }
 
   loadMuscleGroupData() {
-    this.statsService.getMuscleGroupVolumeData().subscribe({
+    const userId = this.authService.getUserId();
+    
+    if (userId === null) {
+      console.error('No se pudo obtener el ID del usuario logueado.');
+      return;
+    }
+
+    this.statsService.getMuscleGroupVolumeData(userId, this.selectedPeriod).subscribe({
       next: (data: MuscleGroupVolumeData) => {
         console.log('Datos recibidos del API:', data);
         
-        // Invertir el orden de las fechas y datos
-        const reversedDates = [...data.dates].reverse();
-        const formattedDates = reversedDates.map((date: string) => this.formatDate(date));
+        const formattedDates = data.dates.map((date: string) => this.formatDate(date));
         
         this.muscleGroups = data.muscle_groups.map((group: MuscleGroup) => {
-          const reversedVolumes = [...group.volumes].reverse();
           return {
             ...group,
-            volumes: reversedVolumes,
             bestVolume: Math.max(...group.volumes)
           };
         });
@@ -168,5 +184,14 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  changePeriod(period: 'week' | 'month' | 'year') {
+    this.selectedPeriod = period;
+    this.loadMuscleGroupData();
+  }
+
+  goBack() {
+    this.router.navigate(['/client-stats']);
   }
 }

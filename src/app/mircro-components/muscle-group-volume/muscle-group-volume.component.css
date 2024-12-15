@@ -37,3 +37,47 @@ canvas {
     width: 100% !important;
     height: 100% !important;
 }
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1680EA;
+    color: white;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #1472d1;
+}
+
+.period-selector {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.period-selector button {
+    padding: 8px 16px;
+    border: 1px solid #1680EA;
+    border-radius: 5px;
+    background: white;
+    color: #1680EA;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.period-selector button.active {
+    background: #1680EA;
+    color: white;
+}
