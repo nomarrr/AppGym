@@ -6,6 +6,7 @@ import { GreyBtnComponent } from '../../mircro-components/grey-btn/grey-btn.comp
 import { BtnComponent } from '../../mircro-components/btn/btn.component';
 import { CoachService } from '../../services/coach.service';
 
+
 interface ClientDetail {
   id: number;
   name: string;
@@ -89,7 +90,9 @@ export class CoachViewClientComponent implements OnInit {
   }
 
   verEstadisticas() {
-    // Implementar la navegación a las estadísticas cuando esté disponible
     console.log('Ver estadísticas del cliente:', this.clientId);
+    this.router.navigate(['/coach-client-stats', this.clientId], {
+      state: { clientName: this.clientName }
+    });
   }
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 Chart.register(...registerables);
 
 interface WeightData {
@@ -24,13 +25,15 @@ interface MonthlyWeightData {
   styleUrl: './user-weight.component.css'
 })
 export class UserWeightComponent implements OnInit, OnDestroy {
+  @Input() clientId: number = 0;
+  @Input() clientName: string = '';
   chart: any;
   selectedPeriod: 'week' | 'month' | 'year' = 'week';
 
   constructor(
     private statsService: StatsService,
     private authService: AuthService,
-    private router: Router
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -43,21 +46,11 @@ export class UserWeightComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatDate(dateString: string): string {
-    if (this.selectedPeriod === 'year') {
-      const [year, month] = dateString.split('-').map(Number);
-      return new Date(year, month - 1).toLocaleString('es', { month: 'short' });
-    } else {
-      const [year, month, day] = dateString.split('-').map(Number);
-      return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
-    }
-  }
-
   loadWeightData() {
-    const userId = this.authService.getUserId();
+    const userId = this.clientId || this.authService.getUserId();
 
     if (userId === null) {
-      console.error('No se pudo obtener el ID del usuario logueado.');
+      console.error('No se pudo obtener el ID del usuario.');
       return;
     }
 
@@ -84,13 +77,14 @@ export class UserWeightComponent implements OnInit, OnDestroy {
     });
   }
 
-  changePeriod(period: 'week' | 'month' | 'year') {
-    this.selectedPeriod = period;
-    this.loadWeightData();
-  }
-
-  goBack() {
-    this.router.navigate(['/client-stats']);
+  formatDate(dateString: string): string {
+    if (this.selectedPeriod === 'year') {
+      const [year, month] = dateString.split('-').map(Number);
+      return new Date(year, month - 1).toLocaleString('es', { month: 'short' });
+    } else {
+      const [year, month, day] = dateString.split('-').map(Number);
+      return `${day} ${new Date(year, month - 1).toLocaleString('es', { month: 'short' })}`;
+    }
   }
 
   createChart(labels: string[], data: number[]) {
@@ -180,5 +174,14 @@ export class UserWeightComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  changePeriod(period: 'week' | 'month' | 'year') {
+    this.selectedPeriod = period;
+    this.loadWeightData();
   }
 }

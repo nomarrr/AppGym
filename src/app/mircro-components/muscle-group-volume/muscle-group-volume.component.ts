@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 Chart.register(...registerables);
 
 interface MuscleGroup {
@@ -26,6 +27,7 @@ interface MuscleGroupVolumeData {
   styleUrl: './muscle-group-volume.component.css'
 })
 export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
+  @Input() clientId: number = 0;
   chart: any;
   muscleGroups: MuscleGroup[] = [];
   selectedPeriod: 'week' | 'month' | 'year' = 'week';
@@ -33,7 +35,7 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
   constructor(
     private statsService: StatsService,
     private authService: AuthService,
-    private router: Router
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
   }
 
   loadMuscleGroupData() {
-    const userId = this.authService.getUserId();
+    const userId = this.clientId || this.authService.getUserId();
     
     if (userId === null) {
       console.error('No se pudo obtener el ID del usuario logueado.');
@@ -192,6 +194,6 @@ export class MuscleGroupVolumeComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/client-stats']);
+    this.location.back();
   }
 }

@@ -47,6 +47,8 @@ import { ViewWorkoutComponent } from './pages/view-workout/view-workout.componen
 import { ClientViewWorkoutComponent } from './pages/client-view-workout/client-view-workout.component';
 import { WorkoutListComponent } from './mircro-components/workout-list/workout-list.component';
 import { InProgressRoutineComponent } from './pages/in-progress-routine/in-progress-routine.component';
+import { CoachClientStatsComponent } from './pages/coach-client-stats/coach-client-stats.component';
+import { ViewClientStatsComponent } from './pages/view-client-stats/view-client-stats.component';
 
 export const routes: Routes = [
   { 
@@ -90,6 +92,18 @@ export const routes: Routes = [
   {
     path: 'create-routine',
     component: CreateRoutineComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'coach-client-stats/:id',
+    component: CoachClientStatsComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'view-client-stats/:id',
+    component: ViewClientStatsComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
   },

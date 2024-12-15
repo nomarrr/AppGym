@@ -1,0 +1,12 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <h1>Estadísticas de {{clientName}}</h1>
+            <app-general-volume *ngIf="selectedStat === 'Volumen general'" [clientId]="clientId"></app-general-volume>
+            <app-muscle-group-volume *ngIf="selectedStat === 'Volumen por grupo muscular'" [clientId]="clientId"></app-muscle-group-volume>
+            <app-muscle-group-sets *ngIf="selectedStat === 'Series por grupo muscular'" [clientId]="clientId"></app-muscle-group-sets>
+            <app-user-weight *ngIf="selectedStat === 'Peso corporal'" [clientId]="clientId" [clientName]="clientName"></app-user-weight>
+        </div>
+    </div>
+</body>

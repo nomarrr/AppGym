@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
 import { StatsStateService } from '../../services/stats-state.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 Chart.register(...registerables);
 
 @Component({
@@ -15,6 +15,7 @@ Chart.register(...registerables);
   styleUrl: './general-volume.component.css'
 })
 export class GeneralVolumeComponent implements OnInit, OnDestroy {
+  @Input() clientId: number = 0;
   chart: any;
   bestVolume: number = 0;
   selectedPeriod: 'week' | 'month' | 'year' = 'week';
@@ -23,7 +24,7 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
     private statsService: StatsService,
     private statsStateService: StatsStateService,
     private authService: AuthService,
-    private router: Router
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
   }
 
   loadVolumeData() {
-    const userId = this.authService.getUserId();
+    const userId = this.clientId || this.authService.getUserId();
     
     if (userId === null) {
       console.error('No se pudo obtener el ID del usuario logueado.');
@@ -166,6 +167,6 @@ export class GeneralVolumeComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/client-stats']);
+    this.location.back();
   }
 }

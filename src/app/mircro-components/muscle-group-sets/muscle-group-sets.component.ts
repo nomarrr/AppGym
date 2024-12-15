@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../services/stats.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-
+import { Location } from '@angular/common';
+import { Input } from '@angular/core';
 Chart.register(...registerables);
 
 interface MuscleGroup {
@@ -27,6 +27,7 @@ interface MuscleGroupSetsData {
   styleUrl: './muscle-group-sets.component.css'
 })
 export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
+  @Input() clientId: number = 0;
   chart: any;
   muscleGroups: MuscleGroup[] = [];
   selectedPeriod: 'week' | 'month' | 'year' = 'week';
@@ -34,7 +35,7 @@ export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
   constructor(
     private statsService: StatsService,
     private authService: AuthService,
-    private router: Router
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -60,10 +61,10 @@ export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
   }
 
   loadMuscleGroupData() {
-    const userId = this.authService.getUserId();
-    
+    const userId = this.clientId || this.authService.getUserId();
+
     if (userId === null) {
-      console.error('No se pudo obtener el ID del usuario logueado.');
+      console.error('No se pudo obtener el ID del usuario.');
       return;
     }
 
@@ -104,7 +105,7 @@ export class MuscleGroupSetsComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/client-stats']);
+    this.location.back();
   }
 
   getRandomColor(): string {
