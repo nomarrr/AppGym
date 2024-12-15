@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { BtnComponent } from '../btn/btn.component';  
+import { AuthService } from '../../services/auth.service';
+import { UserRole } from '../../constants/roles';
 
 @Component({
   selector: 'app-workout-card',
@@ -14,10 +16,20 @@ export class WorkoutCardComponent {
   @Input() workoutId: number = 0;
   @Input() workoutDate: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   navigateToWorkout() {
-    this.router.navigate(['/client-view-workout', this.workoutId]);
+    const userRole = this.authService.getUserRole();
+    console.log('User Role:', userRole); // Verificar el rol del usuario
+    console.log('User Role:', userRole); // Verificar el rol del usuario
+    console.log('User Role:', userRole); // Verificar el rol del usuario
+    console.log('User Role:', userRole); // Verificar el rol del usuario
+    console.log('User Role:', userRole); // Verificar el rol del usuario
+    if (userRole === 2) {
+      this.router.navigate(['/coach-view-workout', this.workoutId]);
+    } else {
+      this.router.navigate(['/client-view-workout', this.workoutId]);
+    }
   }
 
   get formattedDate(): string {

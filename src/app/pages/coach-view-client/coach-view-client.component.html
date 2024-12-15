@@ -34,6 +34,13 @@
                 buttonText="Agregar cliente"
                 (click)="assignClient()">
             </app-btn>
+
+
+            <div *ngIf="isResponsible">
+                <app-workout-list [userId]="clientId"></app-workout-list>
+            </div>
         </div>
+
+        
     </div>
 </body>

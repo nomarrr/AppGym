@@ -49,6 +49,7 @@ import { WorkoutListComponent } from './mircro-components/workout-list/workout-l
 import { InProgressRoutineComponent } from './pages/in-progress-routine/in-progress-routine.component';
 import { CoachClientStatsComponent } from './pages/coach-client-stats/coach-client-stats.component';
 import { ViewClientStatsComponent } from './pages/view-client-stats/view-client-stats.component';
+import { CoachViewWorkoutComponent } from './pages/coach-view-workout/coach-view-workout.component';
 
 export const routes: Routes = [
   { 
@@ -300,6 +301,12 @@ export const routes: Routes = [
     component: AddMembershipUserComponent,
     canActivate: [authGuard],
     canActivateChild: [() => roleGuard([UserRole.ADMIN])]
+  },
+  {
+    path: 'coach-view-workout/:id',
+    component: CoachViewWorkoutComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   { 
     path: '', 

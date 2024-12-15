@@ -9,6 +9,10 @@
         <img src="/img/Search.png" alt="search" class="search-icon">
     </div>
 
+    <div *ngIf="filteredWorkouts.length === 0" class="no-workouts">
+        Este cliente no tiene entrenamientos registrados.
+    </div>
+
     <app-workout-card 
         *ngFor="let workout of filteredWorkouts"
         [workoutName]="workout.name"

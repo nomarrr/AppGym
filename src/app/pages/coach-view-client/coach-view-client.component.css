@@ -8,7 +8,7 @@ html, body {
 .container{
     display: flex;
     height: 100vh;
-    
+    overflow: hidden; /* Evita el scroll en el contenedor principal */
 }
 
 .container2{
@@ -21,6 +21,7 @@ html, body {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* Permite el scroll solo en el contenido */
 }
 
 .content h1{

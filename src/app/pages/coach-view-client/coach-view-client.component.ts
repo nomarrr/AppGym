@@ -5,6 +5,7 @@ import { CoachSidebarComponent } from '../../mircro-components/coach-sidebar/coa
 import { GreyBtnComponent } from '../../mircro-components/grey-btn/grey-btn.component';
 import { BtnComponent } from '../../mircro-components/btn/btn.component';
 import { CoachService } from '../../services/coach.service';
+import { WorkoutListComponent } from '../../mircro-components/workout-list/workout-list.component';
 
 
 interface ClientDetail {
@@ -19,7 +20,7 @@ interface ClientDetail {
 @Component({
   selector: 'app-coach-view-client',
   standalone: true,
-  imports: [CommonModule, CoachSidebarComponent, GreyBtnComponent, BtnComponent],
+  imports: [CommonModule, CoachSidebarComponent, GreyBtnComponent, BtnComponent, WorkoutListComponent],
   templateUrl: './coach-view-client.component.html',
   styleUrl: './coach-view-client.component.css'
 })
