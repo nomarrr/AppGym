@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
         this.router.navigate(['/my-routines']);
         break;
       case 'alimentacion':
-        this.router.navigate(['/nutrition']);
+        this.router.navigate(['/recipes']);
         break;
       case 'estadisticas':
         this.router.navigate(['/client-stats']);

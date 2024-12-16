@@ -53,6 +53,10 @@ import { CoachViewWorkoutComponent } from './pages/coach-view-workout/coach-view
 import { ProfileComponent } from './mircro-components/profile/profile.component';
 import { ClientSelfProfileComponent } from './pages/client-self-profile/client-self-profile.component';
 import { CoachSelfProfileComponent } from './pages/coach-self-profile/coach-self-profile.component';
+import { AddRecipeComponent } from './pages/add-recipe/add-recipe.component';
+import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe.component';
+import { CoachRecipesComponent } from './pages/coach-recipes/coach-recipes.component';
+import { ViewRecipeComponent } from './pages/view-recipe/view-recipe.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -82,6 +86,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
   },
+  {
+    path: 'view-recipe/:id',
+    component: ViewRecipeComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
+  },
   { 
     path: 'coach-dashboard', 
     component: CoachDashboardComponent,
@@ -91,6 +101,24 @@ export const routes: Routes = [
   {
     path: 'coach-self-profile',
     component: CoachSelfProfileComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'coach-recipes',
+    component: CoachRecipesComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'add-recipe',
+    component: AddRecipeComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'edit-recipe/:id',
+    component: EditRecipeComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
   },

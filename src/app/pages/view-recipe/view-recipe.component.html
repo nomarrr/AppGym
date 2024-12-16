@@ -1,0 +1,18 @@
+<body>
+    <div class="container">
+        <app-sidebar></app-sidebar>
+        <div class="content">
+
+            <h1>{{recipe.name}}</h1>
+
+            <img [src]="recipe.image_url || 'img/Camera.png'" 
+            alt="Recipe Image" 
+            class="camera-icon">
+
+            <div class="description">
+                <p>{{recipe.description}}</p>
+            </div>
+
+        </div>
+    </div>
+</body>

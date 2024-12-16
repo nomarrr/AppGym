@@ -1,0 +1,33 @@
+.recipe {
+    display: flex;
+    border: 1px solid #7F8084;
+    border-radius: 10px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.recipe label {
+    flex-grow: 1;
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+button {
+    flex-shrink: 0;
+    min-width: 80px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

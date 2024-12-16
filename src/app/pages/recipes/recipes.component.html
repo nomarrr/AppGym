@@ -4,9 +4,11 @@
         <div class="content">
             <h1>Mis recetas</h1>
             <div class="recipes">
-                <app-recipe-card recipeName="Pizza"></app-recipe-card>
-                <app-recipe-card recipeName="Tacos"></app-recipe-card>
-                <app-recipe-card recipeName="Hamburguesa"></app-recipe-card>
+                <app-client-recipe-card 
+                    *ngFor="let recipe of recipes"
+                    [recipeName]="recipe.name"
+                    [recipeId]="recipe.id">
+                </app-client-recipe-card>
             </div>
         </div>
     </div>

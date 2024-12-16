@@ -1,0 +1,120 @@
+/* Estilos globales */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+
+}
+
+/* Sidebar */
+app-client-sidebar {
+    width: 250px;
+    background-color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Contenido principal */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    align-items: center;
+}
+
+/* Estilos específicos */
+.label {
+    font-size: 20px;
+    color: #7F8084;
+    text-align: center;
+}
+
+.camera-icon {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #F3F3F3;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+textarea.auth-input {
+    resize: none;
+    min-height: 100px;
+}
+
+.content h1 {
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    text-align: center;
+}
+
+.description{
+    background-color: #ffffff; /* Cambia el color a un gris claro */
+    padding: 10px; /* Agrega algo de padding para mejor visibilidad */
+    border-radius: 10px; /* Opcional: bordes redondeados */
+    width: 99%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    white-space: pre-wrap;
+
+}
+
+.recipe-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+p{
+    font-size: 16px;
+    color: #7F8084;
+    margin-bottom: 16px;
+    font-family: Arial, sans-serif;
+}
+

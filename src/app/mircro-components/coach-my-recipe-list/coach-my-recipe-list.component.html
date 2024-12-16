@@ -1,0 +1,16 @@
+<div>
+    <app-edit-recipe-card 
+        *ngFor="let recipe of recipes"
+        [recipeName]="recipe.name"
+        [recipeId]="recipe.id">
+    </app-edit-recipe-card>
+    
+    <div class="buttons">
+        <app-grey-btn 
+            buttonText="Crear nueva receta" 
+            imgSrc="img/Create.png" 
+            buttonWidth="250px"
+            (buttonClick)="navigateToCreateRecipe()">
+        </app-grey-btn>
+    </div>
+</div>

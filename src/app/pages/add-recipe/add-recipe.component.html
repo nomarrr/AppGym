@@ -1,0 +1,40 @@
+<body>
+    <div class="container">
+        <app-coach-sidebar></app-coach-sidebar>
+        <div class="content">
+            <div class="form-container">
+                <label class="label">Agregar receta</label>
+                
+                <input type="file" 
+                       id="fileInput" 
+                       accept="image/*" 
+                       style="display: none;"
+                       (change)="onFileSelected($event)">
+                <img [src]="previewUrl || 'img/Camera.png'" 
+                     alt="Upload" 
+                     class="camera-icon">
+                <label for="fileInput" class="blueLabel">
+                    {{ fileName || 'Agregar imagen' }}
+                </label>
+
+                <input type="text" 
+                       class="auth-input" 
+                       [(ngModel)]="recipe.name"
+                       placeholder="Nombre de receta">
+
+                <textarea class="auth-input"
+                         [(ngModel)]="recipe.description"
+                         placeholder="Especificaciones">
+                </textarea>
+
+                <app-btn 
+                  buttonText="Agregar receta" 
+                  [buttonWidth]="'100%'" 
+                  [buttonFontSize]="'16px'"
+                  [disabled]="isLoading"
+                  (buttonClick)="saveRecipe()">
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</body> 

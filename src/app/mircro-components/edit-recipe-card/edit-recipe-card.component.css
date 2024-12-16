@@ -1,0 +1,25 @@
+.recipe {
+    display: flex;
+    border: 1px solid #7F8084;
+    border-radius: 10px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.recipe label {
+    flex-grow: 1;
+    color: #7F8084;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.recipe app-btn {
+    flex-shrink: 0;
+    min-width: 80px;
+}
+
+.recipe app-btn + app-btn {
+    margin-left: 10px;
+} 
