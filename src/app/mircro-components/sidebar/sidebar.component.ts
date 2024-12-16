@@ -55,7 +55,7 @@ export class SidebarComponent implements OnInit {
         this.router.navigate(['/scanner']);
         break;
       case 'perfil':
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/client-self-profile']);
         break;
       case 'logout':
         this.logout();

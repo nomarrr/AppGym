@@ -50,7 +50,9 @@ import { InProgressRoutineComponent } from './pages/in-progress-routine/in-progr
 import { CoachClientStatsComponent } from './pages/coach-client-stats/coach-client-stats.component';
 import { ViewClientStatsComponent } from './pages/view-client-stats/view-client-stats.component';
 import { CoachViewWorkoutComponent } from './pages/coach-view-workout/coach-view-workout.component';
-
+import { ProfileComponent } from './mircro-components/profile/profile.component';
+import { ClientSelfProfileComponent } from './pages/client-self-profile/client-self-profile.component';
+import { CoachSelfProfileComponent } from './pages/coach-self-profile/coach-self-profile.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -83,6 +85,12 @@ export const routes: Routes = [
   { 
     path: 'coach-dashboard', 
     component: CoachDashboardComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
+  },
+  {
+    path: 'coach-self-profile',
+    component: CoachSelfProfileComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.COACH])]
   },
@@ -139,6 +147,10 @@ export const routes: Routes = [
     component: AdminClientListComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
     path: 'workout-list',
     component: WorkoutListComponent
   },
@@ -165,6 +177,12 @@ export const routes: Routes = [
   {
     path: 'client-stats',
     component: ClientStatsComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.CLIENT])]
+  },
+  {
+    path: 'client-self-profile',
+    component: ClientSelfProfileComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
   },

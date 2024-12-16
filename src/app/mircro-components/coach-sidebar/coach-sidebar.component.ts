@@ -59,7 +59,7 @@ export class CoachSidebarComponent implements OnInit {
         //this.router.navigate(['/recipes']);
         break;
       case 'perfil':
-        //this.router.navigate(['/profile']);
+        this.router.navigate(['/coach-self-profile']);
         break;
       case 'logout':
         this.logout();

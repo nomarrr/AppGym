@@ -1,0 +1,9 @@
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-content">
+    <h2>Registrar Peso</h2>
+    <input type="number" [(ngModel)]="weight" placeholder="Peso en kg" class="weight-input">
+    <div class="button-group">
+        <app-btn buttonText="Guardar" (buttonClick)="save()"></app-btn>
+        <app-btn buttonText="Cancelar" (buttonClick)="close()"></app-btn>
+    </div>
+</div>

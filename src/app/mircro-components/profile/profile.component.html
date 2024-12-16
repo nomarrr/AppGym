@@ -1,0 +1,30 @@
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="pfp">
+            <img [src]="previewUrl || userImage" alt="Profile Image" class="profile-image">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" style="display: none;">
+            <label *ngIf="isEditing" class="blueLabel" (click)="triggerFileInput()">Seleccionar imagen</label>
+        </div>
+        <div class="info">
+            <input *ngIf="isEditing" type="text" [(ngModel)]="userName" class="profile-name">
+            <input *ngIf="!isEditing" type="text" [value]="userName" class="profile-name" readonly>
+            <textarea *ngIf="isEditing" [(ngModel)]="userBio" class="profile-description"></textarea>
+            <textarea *ngIf="!isEditing" [value]="userBio" class="profile-description" readonly></textarea>
+        </div>
+    </div>
+    <div class="profile-footer" *ngIf="!isCoach">
+        <span *ngIf="workoutCount !== null">Entrenamientos <strong>{{workoutCount}}</strong></span>
+        <span *ngIf="membershipDaysRemaining !== null && membershipDaysRemaining > 0">
+            Tu membresía vence en <strong>{{membershipDaysRemaining}} días</strong>
+        </span>
+        <span *ngIf="membershipDaysRemaining !== null && membershipDaysRemaining <= 0">
+            No hay membresías activas
+        </span>
+    </div>
+    <div class="button-group">
+        <app-btn [buttonText]="isEditing ? 'Guardar' : 'Editar'" [buttonWidth]="'80px'" [buttonFontSize]="'14px'" (buttonClick)="toggleEdit()"></app-btn>
+        <app-btn *ngIf="!isCoach && !isEditing" buttonText="Agregar registro de peso" [buttonWidth]="'200px'" [buttonFontSize]="'14px'" (buttonClick)="onAddWeightRecord()"></app-btn>
+        <app-btn *ngIf="isEditing" buttonText="Cancelar" [buttonWidth]="'80px'" [buttonFontSize]="'14px'" (buttonClick)="cancelEdit()"></app-btn>
+    </div>
+    <app-weight-modal *ngIf="showWeightModal" [userId]="userId" (closeModal)="toggleWeightModal()" (saveWeight)="handleWeightSave($event)"></app-weight-modal>
+</div>

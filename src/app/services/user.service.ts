@@ -41,8 +41,18 @@ export class UserService {
     );
   }
 
-  getUserDetails(userId: number) {
-    return this.http.get<UserDetails>(`${environment.apiUrl}/users/${userId}/details`);
+  getUserDetails(userId: number): Observable<UserDetails> {
+    return this.http.get<UserDetails>(`${this.apiUrl}/users/${userId}/details`)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUserProfile(userId: number, formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    });
+
+    return this.http.put(`${this.apiUrl}/users/${userId}/profile`, formData, { headers })
+      .pipe(catchError(this.handleError));
   }
 
   demoteToClient(userId: number) {
