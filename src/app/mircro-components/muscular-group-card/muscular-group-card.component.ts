@@ -7,7 +7,7 @@ import { MuscularGroup } from '../../interfaces/muscular-group.interface';
   standalone: true,
   imports: [BtnComponent],
   templateUrl: './muscular-group-card.component.html',
-  styleUrl: './muscular-group-card.component.css'
+  styleUrls: ['./muscular-group-card.component.css']
 })
 export class MuscularGroupCardComponent {
   @Input() muscularGroup!: MuscularGroup;

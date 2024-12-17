@@ -8,17 +8,17 @@ import { MuscularGroup } from '../interfaces/muscular-group.interface';
 })
 export class ExerciseStateService {
   private exerciseData = new BehaviorSubject<Partial<Exercise>>({});
-  private selectedMuscularGroup = new BehaviorSubject<MuscularGroup | null>(null);
+  private selectedMuscularGroupSubject = new BehaviorSubject<MuscularGroup | null>(null);
 
   currentExercise$ = this.exerciseData.asObservable();
-  currentMuscularGroup$ = this.selectedMuscularGroup.asObservable();
+  currentMuscularGroup$ = this.selectedMuscularGroupSubject.asObservable();
 
   updateExerciseData(data: Partial<Exercise>) {
     this.exerciseData.next({ ...this.exerciseData.value, ...data });
   }
 
   updateSelectedMuscularGroup(group: MuscularGroup) {
-    this.selectedMuscularGroup.next(group);
+    this.selectedMuscularGroupSubject.next(group);
   }
 
   getExerciseData(): Partial<Exercise> {
@@ -26,11 +26,15 @@ export class ExerciseStateService {
   }
 
   getSelectedMuscularGroup(): MuscularGroup | null {
-    return this.selectedMuscularGroup.value;
+    return this.selectedMuscularGroupSubject.value;
   }
 
   clearExerciseData() {
     this.exerciseData.next({});
-    this.selectedMuscularGroup.next(null);
+    this.selectedMuscularGroupSubject.next(null);
+  }
+
+  setSelectedMuscularGroup(group: MuscularGroup) {
+    this.selectedMuscularGroupSubject.next(group);
   }
 } 

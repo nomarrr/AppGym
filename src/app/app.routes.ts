@@ -57,6 +57,7 @@ import { AddRecipeComponent } from './pages/add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe.component';
 import { CoachRecipesComponent } from './pages/coach-recipes/coach-recipes.component';
 import { ViewRecipeComponent } from './pages/view-recipe/view-recipe.component';
+import { EditExerciseComponent } from './pages/edit-exercise/edit-exercise.component';
 export const routes: Routes = [
   { 
     path: 'login',
@@ -79,6 +80,12 @@ export const routes: Routes = [
     component: ClientViewWorkoutComponent,
     canActivate: [authGuard],
     canMatch: [roleGuard([UserRole.CLIENT])]
+  },
+  {
+    path: 'edit-exercise/:id',
+    component: EditExerciseComponent,
+    canActivate: [authGuard],
+    canMatch: [roleGuard([UserRole.COACH])]
   },
   {
     path: 'in-progress-routine',

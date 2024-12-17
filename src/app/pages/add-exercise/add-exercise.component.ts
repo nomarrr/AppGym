@@ -70,7 +70,7 @@ export class AddExerciseComponent implements OnInit {
 
   navigateToMuscleGroupSelection() {
     this.exerciseState.updateExerciseData(this.exercise);
-    this.router.navigate(['/select-muscular-group']);
+    this.router.navigate(['/select-muscular-group'], { queryParams: { returnUrl: '/add-exercise' } });
   }
 
   saveExercise() {

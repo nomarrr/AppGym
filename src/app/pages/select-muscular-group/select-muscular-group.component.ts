@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { CoachSidebarComponent } from '../../mircro-components/coach-sidebar/coach-sidebar.component';
 import { MuscularGroupListComponent } from '../../mircro-components/muscular-group-list/muscular-group-list.component';
 import { ExerciseStateService } from '../../services/exercise-state.service';
 import { MuscularGroup } from '../../interfaces/muscular-group.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-muscular-group',
@@ -19,18 +20,18 @@ import { MuscularGroup } from '../../interfaces/muscular-group.interface';
 })
 export class SelectMuscularGroupComponent {
   constructor(
-    private router: Router,
+    private location: Location,
     private exerciseState: ExerciseStateService
   ) {}
 
   onGroupSelected(group: MuscularGroup) {
-    console.log('Grupo seleccionado en SelectMuscularGroupComponent:', group);
+    console.log('Grupo muscular seleccionado:', group);
     if (group) {
       this.exerciseState.updateSelectedMuscularGroup(group);
       this.exerciseState.updateExerciseData({
         muscle_group_id: group.id
       });
-      this.router.navigate(['/add-exercise']);
+      this.location.back();
     }
   }
 }

@@ -1,0 +1,9 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="onClose()">&times;</span>
+    <h2>{{ exercise.name }}</h2>
+    <img [src]="exercise.image_url" alt="{{ exercise.name }}" />
+    <p>{{ exercise.description }}</p>
+    <button (click)="onClose()" class="close-button">Cerrar</button>
+  </div>
+</div>

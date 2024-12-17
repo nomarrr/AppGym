@@ -7,11 +7,8 @@ export const authGuard = () => {
   const router = inject(Router);
 
   const isAuth = authService.isAuthenticated();
-  console.log('Auth Guard - ¿Está autenticado?:', isAuth);
-  console.log('Auth Guard - Token actual:', localStorage.getItem('access_token'));
 
   if (isAuth) {
-    console.log('Usuario autenticado correctamente');
     return true;
   }
 

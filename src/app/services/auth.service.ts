@@ -43,11 +43,9 @@ export class AuthService {
         if (response.access_token) {
           // Guardamos el token
           localStorage.setItem(this.TOKEN_KEY, response.access_token);
-          console.log('Token guardado en login:', response.access_token);
           
           // Verificamos inmediatamente que se guardó
           const storedToken = localStorage.getItem(this.TOKEN_KEY);
-          console.log('Token verificado después de guardar:', storedToken);
           
           // Solo redirigimos después de confirmar que el token está guardado
           if (storedToken) {
@@ -60,7 +58,6 @@ export class AuthService {
 
   redirectBasedOnRole() {
     const userRole = this.getUserRole();
-    console.log('Redirigiendo usuario con rol:', userRole);
     
     if (userRole === null) {
       console.error('No se pudo obtener el rol del usuario');
@@ -91,10 +88,8 @@ export class AuthService {
     try {
       console.log('Token almacenado:', token);
       const tokenParts = token.split('.');
-      console.log('Partes del token:', tokenParts.length);
       
       const payload = JSON.parse(atob(tokenParts[1]));
-      console.log('Payload decodificado:', payload);
       
       return payload.user_role;
     } catch (error) {

@@ -1,6 +1,11 @@
 <div class="exercise-container">
-    <div class="exercise-header">
+    <div class="exercise-header" (click)="onHeaderClick()">
         <img [src]="imageUrl" alt="Exercise Image" />
         <label>{{ exerciseName }}</label>
+        <div class="exercise-actions">
+            <app-btn buttonText="Editar" (buttonClick)="onEdit()"></app-btn>
+            <app-btn buttonText="Eliminar" (buttonClick)="onDelete()"></app-btn>
+        </div>
     </div>
+    <app-exercise-modal *ngIf="showModal" [exercise]="exerciseDetails" (close)="closeModal()"></app-exercise-modal>
 </div>

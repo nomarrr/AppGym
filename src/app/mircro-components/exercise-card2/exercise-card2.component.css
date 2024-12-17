@@ -18,9 +18,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
     width: 98%;
-    padding: 5px 10px; /* Añade espacio adicional solo a los lados */
+    padding: 5px 10px;
     margin: 0;
     border: 1px solid #7F8084;
     border-radius: 10px;
@@ -38,4 +39,24 @@
     color: #7F8084;
     font-family: Arial, sans-serif;
     font-size: 24px;
+    flex-grow: 1;
+}
+
+.exercise-actions {
+    display: flex;
+    gap: 5px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #1680EA;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #056dd6;
 }

@@ -3,11 +3,13 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BtnComponent } from '../btn/btn.component';
+import { ExerciseService } from '../../services/exercise.service';
+import { ExerciseModalComponent } from '../exercise-modal/exercise-modal.component';
 
 @Component({
   selector: 'app-exercise-card',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, BtnComponent],
+  imports: [ReactiveFormsModule, CommonModule, BtnComponent, ExerciseModalComponent],
   templateUrl: './exercise-card.component.html',
   styleUrls: ['./exercise-card.component.css'],
 })
@@ -29,8 +31,10 @@ export class ExerciseCardComponent implements OnInit {
     reps: number
   }>();
   volumenTotal: number = 0;
+  showModal: boolean = false;
+  exerciseDetails: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private exerciseService: ExerciseService) {}
 
   ngOnInit(): void {
     this.exerciseForm = this.fb.group({
@@ -182,5 +186,21 @@ export class ExerciseCardComponent implements OnInit {
     return form.get('completed')?.value ? 
       'Click para desmarcar set' : 
       'Click para marcar set como completado';
+  }
+
+  onHeaderClick(): void {
+    this.exerciseService.getExerciseById(this.exerciseId).subscribe(
+      (exercise) => {
+        this.exerciseDetails = exercise;
+        this.showModal = true;
+      },
+      (error) => {
+        console.error('Error al obtener los detalles del ejercicio:', error);
+      }
+    );
+  }
+
+  closeModal(): void {
+    this.showModal = false;
   }
 }

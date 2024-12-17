@@ -44,7 +44,8 @@ export class WorkoutListComponent implements OnInit {
     } else {
       const searchTermLower = this.searchTerm.toLowerCase();
       this.filteredWorkouts = this.workouts.filter(workout => 
-        workout.name.toLowerCase().includes(searchTermLower)
+        workout.name.toLowerCase().includes(searchTermLower) ||
+        workout.date.toLowerCase().includes(searchTermLower)
       );
     }
   }

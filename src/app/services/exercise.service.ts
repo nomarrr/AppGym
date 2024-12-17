@@ -58,11 +58,11 @@ export class ExerciseService {
     return this.http.get<Exercise[]>(`${environment.apiUrl}/api/exercises/`, { headers });
   }
 
-  getExerciseById(id: number): Observable<Exercise> {
+  getExerciseById(exerciseId: number): Observable<any> {
     const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     
-    return this.http.get<Exercise>(`${environment.apiUrl}/api/exercises/${id}/`, { headers });
+    return this.http.get<any>(`${environment.apiUrl}/exercises/${exerciseId}`, { headers });
   }
 
   addExerciseToRoutine(routineId: number, exerciseId: number): Observable<any> {
@@ -74,5 +74,29 @@ export class ExerciseService {
       { exercise_id: exerciseId },
       { headers }
     );
+  }
+
+  updateExercise(exerciseId: number, formData: FormData): Observable<any> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const formDataObj: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      formDataObj[key] = value;
+    });
+
+    console.log('Datos enviados al endpoint:', {
+      exerciseId,
+      formData: formDataObj
+    });
+
+    return this.http.put<any>(`${environment.apiUrl}/exercises/${exerciseId}`, formData, { headers });
+  }
+
+  deleteExercise(exerciseId: number): Observable<any> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete<any>(`${environment.apiUrl}/exercises/${exerciseId}`, { headers });
   }
 }

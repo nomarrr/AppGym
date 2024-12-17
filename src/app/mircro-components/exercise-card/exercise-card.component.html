@@ -1,6 +1,6 @@
 <!-- src/app/mircro-components/exercise-card/exercise-card.component.html -->
 <div class="exercise-container">
-  <div class="exercise-header">
+  <div class="exercise-header" (click)="onHeaderClick()">
     <img [src]="imageUrl" alt="Exercise Image" />
     <label>{{ exerciseName }}</label>
   </div>
@@ -40,4 +40,6 @@
       </table>
     </form>
   </div>
+
+  <app-exercise-modal *ngIf="showModal" [exercise]="exerciseDetails" (close)="closeModal()"></app-exercise-modal>
 </div>
