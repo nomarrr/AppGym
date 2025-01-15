@@ -93,6 +93,9 @@ export class CreateRoutineComponent implements OnInit {
       next: (response: any) => {
         console.log('Respuesta de crear rutina:', response);
         
+        localStorage.removeItem('tempExercises');
+        localStorage.removeItem('tempRoutineName');
+
         if (this.isAssigningToClient && this.assignToClientId && response.routine_id) {
           this.routineService.assignRoutine(this.assignToClientId, response.routine_id).subscribe({
             next: () => {

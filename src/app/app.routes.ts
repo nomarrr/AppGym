@@ -58,10 +58,15 @@ import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe.component';
 import { CoachRecipesComponent } from './pages/coach-recipes/coach-recipes.component';
 import { ViewRecipeComponent } from './pages/view-recipe/view-recipe.component';
 import { EditExerciseComponent } from './pages/edit-exercise/edit-exercise.component';
+import { RegisterComponent } from './pages/register/register.component';
 export const routes: Routes = [
   { 
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   { 
     path: 'my-routines', 

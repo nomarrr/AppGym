@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserRole } from '../constants/roles';
+import { environment } from '../../environments/environment';
 
 // Definimos la interfaz para la respuesta
 interface LoginResponse {
@@ -22,7 +23,7 @@ interface TokenPayload {
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'access_token';
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,

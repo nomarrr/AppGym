@@ -42,6 +42,7 @@ export class LoginComponent {
 
   goToRegister() {
     this.router.navigate(['/register']);
+    console.log('Navegando a /register');
   }
 
   goToRecoverPassword() {

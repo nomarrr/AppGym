@@ -46,6 +46,8 @@ export class RegisterComponent {
       .subscribe({
         next: response => {
           console.log('Registro exitoso ', response);
+          alert('Registro exitoso');
+          this.goToLogin();
         },
         error: error => {
           console.log('Error en el registro ',error);

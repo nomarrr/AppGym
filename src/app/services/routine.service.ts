@@ -31,7 +31,7 @@ interface Exercise {
   providedIn: 'root'
 })
 export class RoutineService {
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = 'https://fastapi-production-6897.up.railway.app';
   private temporarilyDeletedExercises = new Set<number>();
   private temporarilyAddedExercises = new Map<number, any[]>();
   private exerciseOrderMap = new Map<number, any[]>();
